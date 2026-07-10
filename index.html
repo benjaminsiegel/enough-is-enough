@@ -1,0 +1,660 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Enough is Enough — An open letter to Mayor Wu</title>
+<meta name="description" content="We are parents, families, and neighbors from across Boston. For years we have warned that continued delay on street safety would cost lives. Read and sign the open letter to Mayor Wu.">
+
+<!-- Open Graph / social cards -->
+<meta property="og:title" content="ENOUGH IS ENOUGH — An open letter to Mayor Wu on street safety">
+<meta property="og:description" content="Boston has been warned for years that delayed street-safety projects would cost lives. Read and sign the open letter.">
+<meta property="og:type" content="website">
+<meta property="og:image" content="/og-card.png">
+<meta name="twitter:card" content="summary_large_image">
+
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Archivo+Black&family=Archivo:wght@400;600&family=Source+Serif+4:ital,opsz,wght@0,8..60,400;0,8..60,600;1,8..60,400&display=swap" rel="stylesheet">
+
+<style>
+:root{
+  --asphalt:#1A1B1D;
+  --ground:#FFFFFF;
+  --ink:#141414;
+  --paint:#F2B705;
+  --concrete:#8A8D91;
+  --hairline:#E3E4E6;
+  --measure:65ch;
+}
+*{margin:0;padding:0;box-sizing:border-box;}
+html{scroll-behavior:smooth;}
+@media (prefers-reduced-motion: reduce){
+  html{scroll-behavior:auto;}
+  *,*::before,*::after{animation:none!important;transition:none!important;}
+}
+body{
+  background:var(--ground);
+  color:var(--ink);
+  font-family:'Archivo',system-ui,sans-serif;
+  -webkit-font-smoothing:antialiased;
+}
+a{color:inherit;}
+:focus-visible{outline:3px solid var(--paint);outline-offset:2px;}
+
+/* ---------- top band ---------- */
+.topband{
+  background:var(--asphalt);
+  color:rgba(255,255,255,.85);
+  font-size:.78rem;
+  letter-spacing:.14em;
+  text-transform:uppercase;
+  text-align:center;
+  padding:.7rem 1rem;
+}
+
+/* ---------- hero ---------- */
+.hero{
+  padding:clamp(3.5rem,10vw,7rem) 1.25rem clamp(3rem,8vw,5.5rem);
+  text-align:center;
+}
+.hero h1{
+  font-family:'Archivo Black',sans-serif;
+  font-size:clamp(2.6rem,11.5vw,7.2rem);
+  line-height:.95;
+  letter-spacing:-.015em;
+  text-transform:uppercase;
+  color:var(--ink);
+}
+.rule{
+  height:10px;
+  background:var(--paint);
+  width:0;
+  max-width:min(78vw,880px);
+  margin:1.1rem auto 0;
+  animation:drawin 1.1s cubic-bezier(.77,0,.18,1) .25s forwards;
+}
+@keyframes drawin{to{width:min(78vw,880px);}}
+@media (prefers-reduced-motion: reduce){
+  .rule{width:min(78vw,880px);}
+}
+.hero .sub{
+  font-family:'Source Serif 4',serif;
+  font-size:clamp(1.05rem,2.6vw,1.35rem);
+  color:var(--ink);
+  max-width:34ch;
+  margin:1.6rem auto 0;
+  line-height:1.45;
+}
+.hero .cta{
+  display:inline-block;
+  margin-top:2.2rem;
+  background:var(--ink);
+  color:#fff;
+  text-decoration:none;
+  font-weight:600;
+  font-size:1rem;
+  letter-spacing:.02em;
+  padding:1rem 2.2rem;
+}
+.hero .cta:hover{background:#000;}
+.hero .count{
+  margin-top:1.4rem;
+  font-size:.9rem;
+  color:var(--concrete);
+  letter-spacing:.04em;
+}
+.goalbar{
+  max-width:min(78vw,880px);
+  margin:.9rem auto 0;
+  height:6px;
+  background:var(--hairline);
+}
+.goalfill{
+  height:100%;
+  width:0;
+  background:var(--paint);
+  transition:width .8s ease;
+}
+
+/* ---------- letter ---------- */
+.letter{
+  border-top:1px solid var(--hairline);
+  padding:clamp(3rem,7vw,5rem) 1.25rem;
+}
+.letter-inner{
+  max-width:var(--measure);
+  margin:0 auto;
+  font-family:'Source Serif 4',serif;
+  font-size:1.125rem;
+  line-height:1.72;
+}
+.letter a{
+  color:inherit;
+  text-decoration:underline;
+  text-decoration-color:var(--paint);
+  text-decoration-thickness:2px;
+  text-underline-offset:3px;
+}
+.letter a:hover{text-decoration-color:var(--ink);}
+.letter .addr{
+  font-family:'Archivo',sans-serif;
+  font-size:.85rem;
+  letter-spacing:.06em;
+  color:var(--concrete);
+  text-transform:uppercase;
+  border-bottom:1px solid var(--hairline);
+  padding-bottom:1.4rem;
+  margin-bottom:2.2rem;
+  line-height:1.8;
+}
+.letter .addr strong{color:var(--ink);font-weight:600;}
+.letter p{margin-bottom:1.35rem;}
+.letter .lede{
+  font-weight:600;
+  font-size:1.55rem;
+  letter-spacing:-.005em;
+}
+.letter ol{
+  list-style:none;
+  counter-reset:demand;
+  margin:0 0 1.35rem 0;
+}
+.letter ol li{
+  counter-increment:demand;
+  position:relative;
+  padding-left:3.1rem;
+  margin-bottom:1.25rem;
+}
+.letter ol li::before{
+  content:counter(demand);
+  position:absolute;
+  left:.15rem;
+  top:.05rem;
+  font-family:'Archivo Black',sans-serif;
+  font-size:1.4rem;
+  line-height:1;
+  color:var(--ink);
+}
+.letter ol li::after{
+  content:"";
+  position:absolute;
+  left:0;
+  top:1.75rem;
+  width:1.7rem;
+  height:4px;
+  background:var(--paint);
+}
+.letter ol li strong{font-weight:600;}
+.letter .signoff{
+  margin-top:2.4rem;
+  font-weight:600;
+}
+
+/* ---------- sign form ---------- */
+.sign{
+  border-top:1px solid var(--hairline);
+  padding:clamp(3rem,7vw,5rem) 1.25rem;
+  background:#FAFAFA;
+}
+.sign-inner{max-width:var(--measure);margin:0 auto;}
+.sign h2, .wall h2{
+  font-family:'Archivo Black',sans-serif;
+  text-transform:uppercase;
+  font-size:clamp(1.6rem,5vw,2.4rem);
+  letter-spacing:-.01em;
+  margin-bottom:.6rem;
+}
+.sign .why{
+  font-family:'Source Serif 4',serif;
+  font-size:1.05rem;
+  line-height:1.6;
+  color:var(--ink);
+  margin-bottom:2.2rem;
+  max-width:55ch;
+}
+.field{margin-bottom:1.4rem;}
+label{
+  display:block;
+  font-size:.85rem;
+  font-weight:600;
+  letter-spacing:.05em;
+  text-transform:uppercase;
+  margin-bottom:.45rem;
+}
+label .opt{font-weight:400;color:var(--concrete);text-transform:none;letter-spacing:0;}
+input[type=text],input[type=email],textarea{
+  width:100%;
+  font-family:'Archivo',sans-serif;
+  font-size:1.05rem;
+  padding:.85rem .9rem;
+  border:1.5px solid var(--ink);
+  border-radius:0;
+  background:#fff;
+  color:var(--ink);
+}
+textarea{resize:vertical;min-height:5.5rem;line-height:1.5;}
+.checks{display:flex;flex-wrap:wrap;gap:.6rem .9rem;}
+.chip{
+  display:inline-flex;align-items:center;gap:.45rem;
+  border:1.5px solid var(--ink);
+  padding:.55rem .85rem;
+  font-size:.95rem;
+  background:#fff;
+  cursor:pointer;
+}
+.chip input{accent-color:var(--ink);width:1.05rem;height:1.05rem;}
+.chip:has(input:checked){background:var(--ink);color:#fff;}
+.charnote{font-size:.8rem;color:var(--concrete);margin-top:.35rem;}
+.consent{
+  display:flex;gap:.7rem;align-items:flex-start;
+  font-size:.95rem;line-height:1.5;
+  margin-bottom:1rem;
+  cursor:pointer;
+  text-transform:none;letter-spacing:0;font-weight:400;
+}
+.consent input{margin-top:.2rem;width:1.15rem;height:1.15rem;accent-color:var(--ink);flex-shrink:0;}
+.submit{
+  display:block;width:100%;
+  background:var(--ink);color:#fff;
+  border:none;border-radius:0;
+  font-family:'Archivo',sans-serif;
+  font-weight:600;font-size:1.15rem;letter-spacing:.02em;
+  padding:1.15rem;
+  margin-top:1.8rem;
+  cursor:pointer;
+}
+.submit:hover{background:#000;}
+.fineprint{
+  font-size:.8rem;color:var(--concrete);line-height:1.55;
+  margin-top:1.1rem;
+}
+.hp{position:absolute;left:-9999px;height:0;overflow:hidden;}
+.confirm{
+  display:none;
+  border:1.5px solid var(--ink);
+  background:#fff;
+  padding:2.2rem 1.6rem;
+  text-align:center;
+}
+.confirm h3{
+  font-family:'Archivo Black',sans-serif;
+  text-transform:uppercase;font-size:1.4rem;margin-bottom:.7rem;
+}
+.confirm p{font-family:'Source Serif 4',serif;font-size:1.05rem;line-height:1.6;margin-bottom:1.4rem;}
+.sharerow{display:flex;flex-wrap:wrap;gap:.6rem;justify-content:center;}
+.sharerow a,.sharerow button{
+  font-family:'Archivo',sans-serif;font-size:.9rem;font-weight:600;
+  border:1.5px solid var(--ink);background:#fff;color:var(--ink);
+  padding:.6rem 1rem;text-decoration:none;cursor:pointer;border-radius:0;
+}
+.sharerow a:hover,.sharerow button:hover{background:var(--ink);color:#fff;}
+.err{display:none;color:#A31D1D;font-size:.9rem;margin-top:.8rem;font-weight:600;}
+
+/* ---------- signature wall ---------- */
+.wall{
+  display:none;
+  border-top:1px solid var(--hairline);
+  padding:clamp(3rem,7vw,5rem) 1.25rem;
+}
+.wall-inner{max-width:900px;margin:0 auto;}
+.wall .wallcount{
+  font-family:'Source Serif 4',serif;
+  font-size:1.05rem;color:var(--ink);margin-bottom:2rem;
+}
+.wallnames{
+  columns:3 220px;
+  column-gap:2.2rem;
+  font-size:.95rem;
+  line-height:2;
+}
+.wallnames div{break-inside:avoid;}
+.wallnames span.z{color:var(--concrete);font-size:.82rem;}
+
+/* ---------- memorial ---------- */
+.memorial{
+  background:var(--asphalt);
+  color:rgba(255,255,255,.82);
+  padding:2.6rem 1.25rem;
+  text-align:center;
+}
+.memorial .names{
+  font-family:'Source Serif 4',serif;
+  font-size:.95rem;
+  line-height:2;
+  letter-spacing:.02em;
+  max-width:70ch;margin:0 auto;
+}
+.memorial .names span{white-space:nowrap;}
+.memorial .names span:not(:last-child)::after{content:"  ·  ";color:rgba(255,255,255,.35);}
+
+/* ---------- footer ---------- */
+footer{
+  background:var(--asphalt);
+  color:rgba(255,255,255,.7);
+  border-top:1px solid rgba(255,255,255,.12);
+  padding:2.2rem 1.25rem 3rem;
+  text-align:center;
+  font-size:.85rem;line-height:1.7;
+}
+footer a{color:rgba(255,255,255,.9);}
+
+/* ---------- sticky CTA ---------- */
+.stickycta{
+  position:fixed;left:0;right:0;bottom:0;z-index:50;
+  background:var(--ink);
+  padding:.7rem 1rem calc(.7rem + env(safe-area-inset-bottom));
+  text-align:center;
+  transform:translateY(110%);
+  transition:transform .25s ease;
+}
+.stickycta.show{transform:none;}
+.stickycta a{
+  display:block;color:#fff;text-decoration:none;
+  font-weight:600;font-size:1.05rem;letter-spacing:.02em;
+}
+.stickycta a span{color:var(--paint);}
+</style>
+</head>
+<body>
+
+<div class="topband">An open letter to Mayor Michelle Wu &nbsp;·&nbsp; Boston &nbsp;·&nbsp; July 2026</div>
+
+<header class="hero">
+  <h1>Enough<br>is Enough</h1>
+  <div class="rule" aria-hidden="true"></div>
+  <p class="sub">An open letter to Mayor Wu from the parents, families, and neighbors of Boston.</p>
+  <a class="cta" href="#letter">Read and sign the letter</a>
+  <p class="count" id="sigcount">Help us reach 3,700 signatures &mdash; one hundred for every year of Louisa&rsquo;s life.</p>
+  <div class="goalbar" aria-hidden="true"><div class="goalfill" id="goalfill"></div></div>
+</header>
+
+<main>
+<section class="letter" id="letter" aria-label="The open letter">
+  <div class="letter-inner">
+    <div class="addr">
+      <strong>To:</strong> Mayor Michelle Wu<br>
+      <strong>Cc:</strong> The Boston City Council; Nick Gove, Interim Chief of Streets
+    </div>
+
+    <p>Dear Mayor Wu,</p>
+    <p class="lede">Enough is enough.</p>
+    <p>We are parents, families, and neighbors from across Boston. Many of us have met you — at safety walks, at community meetings, on Hyde Park Avenue and on corridors like it across the city. For years, we have told you, in public and to your face, that continued delay on street safety would cost lives.</p>
+    <p>Last week it cost the life of <a href="https://www.bostonglobe.com/2026/07/09/metro/pedestrian-struck-killed-in-roxbury-crossing/" target="_blank" rel="noopener">Louisa Gag</a> — a transportation planner in your own administration, a person who devoted her career to making our streets safe. Louisa was killed on her bicycle blocks from an intersection your administration has <a href="https://mass.streetsblog.org/2026/07/09/driver-kills-bicyclist-on-tremont-street-in-mission-hill" target="_blank" rel="noopener">studied and stalled</a>. She was not the first. We have been losing neighbors to these streets for years, and we have been warning you, specifically and repeatedly, that more deaths were coming.</p>
+    <p>You know as well as anyone how beloved Louisa was. She began her career in public service on your own staff, when you were a city councilor, and she spent it working tirelessly for the residents of Boston — beside the advocates she organized, her colleagues in City Hall, and neighbors across this city whose streets are safer because of her. She was killed on the very streets she was working to improve. Years ago, one of her professional responsibilities was keeping the list of people killed by cars in Boston. Now her name has been added to it.</p>
+    <p>For at least eighteen months, your administration has <a href="https://www.bostonglobe.com/2026/03/15/metro/boston-mayor-michelle-wu-streets-cabinet-project-pause/" target="_blank" rel="noopener">paused, re-studied, and slow-walked</a> safety projects that were <a href="https://www.bostonglobe.com/2026/03/09/opinion/wu-bike-lanes-street-safety/" target="_blank" rel="noopener">designed, funded, and ready</a>. You have told us these projects need more process, more consensus, more perfection. But consensus never arrives for the dead. A study protects no one. Delay is a decision, and its costs are measured in lives.</p>
+    <p>Budgets are moral documents. The budget you put forward placed safety projects on hold and cut transportation funding at the very moment the city needed the opposite. That, too, was a decision.</p>
+    <p>We are asking you to lead — not to adjust your communications strategy, not to speak in lofty generalities, but to act:</p>
+    <ol>
+      <li><strong>Unpause <em>every</em> stalled street-safety project within 30 days,</strong> with a published, dated construction schedule for each.</li>
+      <li><strong>Restore the street-safety and transportation funding cut in your budget.</strong></li>
+      <li><strong>Build fast and fix later.</strong> End the practice of holding projects hostage to perfect designs and unanimous approval. Use quick-build materials now; refine as you go.</li>
+      <li><strong>Appoint a permanent, qualified Chief of Streets</strong> with a broad public mandate to eliminate traffic deaths.</li>
+      <li><strong>Be accountable.</strong> Publish a public timeline for every high-crash corridor — including Tremont Street and Hyde Park Avenue — with a named official responsible for each.</li>
+    </ol>
+    <p>None of us is willing to raise our families in a city whose leadership will not answer for preventable deaths on its own streets. We are asking you to do what is right. And if you cannot or will not, we ask you to step aside and make way for leadership that can.</p>
+    <p class="signoff">Signed,<br>The parents, families, and neighbors of Boston</p>
+  </div>
+</section>
+
+<section class="sign" id="sign" aria-label="Sign the letter">
+  <div class="sign-inner">
+    <h2>Add your name</h2>
+    <p class="why">Louisa was 36 years old — she never reached 37. We are gathering 3,700 signatures, one hundred for every year of a life this city failed to protect. Your name and zip code will be delivered to the Mayor's office, the City Council, and the Interim Chief of Streets with the full letter.</p>
+
+    <form id="sigform" name="signatures" method="POST" data-netlify="true" netlify-honeypot="bot-field" novalidate>
+      <input type="hidden" name="form-name" value="signatures">
+      <p class="hp"><label>Don't fill this out: <input name="bot-field" id="botfield"></label></p>
+
+      <div class="field">
+        <label for="fullname">Full name</label>
+        <input type="text" id="fullname" name="fullname" autocomplete="name" required>
+      </div>
+
+      <div class="field">
+        <label for="zip">Zip code</label>
+        <input type="text" id="zip" name="zip" inputmode="numeric" pattern="[0-9]{5}" maxlength="5" autocomplete="postal-code" required>
+      </div>
+
+      <div class="field">
+        <label for="email">Email</label>
+        <input type="email" id="email" name="email" autocomplete="email" required>
+      </div>
+
+      <div class="field">
+        <label>I am signing as a… <span class="opt">(optional — check any)</span></label>
+        <div class="checks">
+          <label class="chip"><input type="checkbox" name="role" value="Parent / Caregiver">Parent / Caregiver</label>
+          <label class="chip"><input type="checkbox" name="role" value="Cyclist">Cyclist</label>
+          <label class="chip"><input type="checkbox" name="role" value="Pedestrian">Pedestrian</label>
+          <label class="chip"><input type="checkbox" name="role" value="City worker">City worker</label>
+          <label class="chip"><input type="checkbox" name="role" value="Neighbor">Neighbor</label>
+        </div>
+      </div>
+
+      <div class="field">
+        <label for="message">If you'd like, add a message to the Mayor <span class="opt">(optional)</span></label>
+        <textarea id="message" name="message" maxlength="400" rows="4"></textarea>
+        <div class="charnote"><span id="charcount">400</span> characters remaining</div>
+      </div>
+
+      <label class="consent">
+        <input type="checkbox" id="consent-public" name="consent_public" value="yes" required>
+        <span>Display my name and zip code publicly as a signatory. <strong>(required)</strong></span>
+      </label>
+      <label class="consent">
+        <input type="checkbox" name="consent_contact" id="consent-contact" value="yes">
+        <span>Contact me about next steps.</span>
+      </label>
+
+      <button class="submit" type="submit">Add my name</button>
+      <p class="err" id="formerr">Please complete the required fields above.</p>
+      <p class="fineprint">Names and zip codes are published with your consent. Emails are never published or shared, and are used only to deliver this letter and send one follow-up.</p>
+    </form>
+
+    <div class="confirm" id="confirm" role="status">
+      <h3>Your name has been added.</h3>
+      <p>Thank you for standing with your neighbors. We are gathering 3,700 signatures — one hundred for every year of Louisa's life — and every one will be delivered to the Mayor's office. Help us get there:</p>
+      <div class="sharerow">
+        <button type="button" id="copylink">Copy link</button>
+        <a id="sh-bsky" target="_blank" rel="noopener">Bluesky</a>
+        <a id="sh-fb" target="_blank" rel="noopener">Facebook</a>
+        <a id="sh-x" target="_blank" rel="noopener">X</a>
+        <a id="sh-em">Email</a>
+      </div>
+    </div>
+  </div>
+</section>
+
+<section class="wall" id="wall" aria-label="Signatories">
+  <div class="wall-inner">
+    <h2>Signed by</h2>
+    <p class="wallcount" id="wallcount"></p>
+    <div class="wallnames" id="wallnames"></div>
+  </div>
+</section>
+
+<section class="memorial" aria-label="In memory">
+  <div class="names" id="memorial-names">
+    <!-- Populated from memorial.json when supplied. Fallback line below. -->
+    <span>In memory of Louisa Gag, and every neighbor we have lost to traffic violence.</span>
+  </div>
+</section>
+</main>
+
+<footer>
+  <p>A volunteer effort of Boston residents. Not affiliated with any organization.</p>
+  <p>Press: <a href="#" id="pressmail">contact by email</a></p>
+  <p>Names and zip codes are published only with signers' consent. Emails are never shared.</p>
+</footer>
+
+<div class="stickycta" id="stickycta" aria-hidden="true">
+  <a href="#sign">Add my name <span>&rarr;</span></a>
+</div>
+
+<script src="config.js"></script>
+<script>
+(function(){
+  /* Public Supabase values live in config.js. The anon key is intended to be public. */
+  var CONFIG = window.OPEN_LETTER_CONFIG || {};
+  var SUPABASE_URL = CONFIG.SUPABASE_URL || "";
+  var SUPABASE_KEY = CONFIG.SUPABASE_ANON_KEY || "";
+
+  var GOAL = 3700;
+  var SHARE_TEXT = "Boston has been warned for years that delayed street-safety projects would cost lives. Enough is enough. Read and sign the open letter to Mayor Wu:";
+  var url = location.origin && location.origin !== "null" ? location.href.split("#")[0] : "https://EXAMPLE.ORG/";
+
+  function sbHeaders(extra){
+    var h = { "apikey": SUPABASE_KEY, "Authorization": "Bearer " + SUPABASE_KEY };
+    for(var k in (extra||{})) h[k] = extra[k];
+    return h;
+  }
+
+  /* character counter (400) */
+  var msg = document.getElementById("message");
+  var cc = document.getElementById("charcount");
+  msg.addEventListener("input", function(){ cc.textContent = 400 - msg.value.length; });
+
+  /* press email — assembled at click time so it never appears in the page source */
+  var pm = document.getElementById("pressmail");
+  pm.addEventListener("click", function(e){
+    e.preventDefault();
+    var addr = ["benjamin","robert","siegel"].join(".") + "@" + "gmail" + ".com";
+    location.href = "mailto:" + addr + "?subject=" + encodeURIComponent("Enough is Enough — press inquiry");
+  });
+
+  /* signature wall + live count (Supabase). Falls back to count.json if Supabase isn't configured. */
+  function renderCount(n){
+    document.getElementById("sigcount").textContent =
+      n.toLocaleString() + " of 3,700 neighbors have signed \u2014 one hundred names for every year of Louisa\u2019s life.";
+    document.getElementById("goalfill").style.width = Math.min(100, (n / GOAL) * 100) + "%";
+  }
+  function lastNameKey(name){
+    var parts = name.trim().split(/\s+/);
+    return (parts[parts.length - 1] + " " + name).toLowerCase();
+  }
+  function loadWall(){
+    if(!SUPABASE_URL || !SUPABASE_KEY) return;
+    fetch(SUPABASE_URL + "/rest/v1/public_signatures?select=name,zip", {
+      headers: sbHeaders({ "Prefer": "count=exact", "Range-Unit": "items", "Range": "0-9999" })
+    }).then(function(r){
+      var total = null;
+      var cr = r.headers.get("content-range");
+      if(cr && cr.indexOf("/") > -1) total = parseInt(cr.split("/")[1], 10);
+      return r.json().then(function(rows){ return { rows: rows, total: total }; });
+    }).then(function(d){
+      if(!d.rows || !d.rows.length) return;
+      var n = (d.total !== null && !isNaN(d.total)) ? d.total : d.rows.length;
+      renderCount(n);
+      d.rows.sort(function(a,b){
+        return lastNameKey(a.name).localeCompare(lastNameKey(b.name), undefined, {sensitivity:"base"});
+      });
+      var box = document.getElementById("wallnames");
+      box.innerHTML = "";
+      d.rows.forEach(function(row){
+        var div = document.createElement("div");
+        div.textContent = row.name + " ";
+        var z = document.createElement("span");
+        z.className = "z";
+        z.textContent = row.zip;
+        div.appendChild(z);
+        box.appendChild(div);
+      });
+      document.getElementById("wallcount").textContent =
+        n.toLocaleString() + " of 3,700 — in alphabetical order.";
+      document.getElementById("wall").style.display = "block";
+    }).catch(function(){});
+  }
+  loadWall();
+  /* Polling keeps open pages current when other neighbors add their names. */
+  setInterval(loadWall, 30000);
+  document.addEventListener("visibilitychange", function(){ if(!document.hidden) loadWall(); });
+
+  /* memorial strip — supply memorial.json as [{"name":"…","year":"…"}] */
+  fetch("/memorial.json").then(function(r){ return r.ok ? r.json() : null; }).then(function(list){
+    if(list && list.length){
+      var box = document.getElementById("memorial-names");
+      box.innerHTML = "";
+      list.forEach(function(p){
+        var s = document.createElement("span");
+        s.textContent = p.year ? (p.name + ", " + p.year) : p.name;
+        box.appendChild(s);
+      });
+    }
+  }).catch(function(){});
+
+  /* sticky CTA: visible when neither the hero nor the sign form is on screen; gone after signing */
+  var bar = document.getElementById("stickycta");
+  var heroVis = true, signVis = false, signed = false;
+  function updBar(){ bar.classList.toggle("show", !heroVis && !signVis && !signed); }
+  if("IntersectionObserver" in window){
+    new IntersectionObserver(function(en){ heroVis = en[0].isIntersecting; updBar(); }, {threshold:.05}).observe(document.querySelector(".hero"));
+    new IntersectionObserver(function(en){ signVis = en[0].isIntersecting; updBar(); }, {threshold:.1}).observe(document.getElementById("sign"));
+  }
+
+  /* form submit: Supabase if configured, otherwise Netlify Forms */
+  var form = document.getElementById("sigform");
+  var err = document.getElementById("formerr");
+  var submit = form.querySelector("button[type=submit]");
+  function showError(message){
+    err.textContent = message;
+    err.style.display = "block";
+    submit.disabled = false;
+    submit.textContent = "Add my name";
+  }
+  function showConfirm(){
+    signed = true; updBar();
+    form.style.display = "none";
+    document.getElementById("confirm").style.display = "block";
+    document.getElementById("confirm").scrollIntoView({behavior:"smooth", block:"center"});
+    loadWall();
+  }
+  form.addEventListener("submit", function(e){
+    e.preventDefault();
+    if(!form.checkValidity()){ err.style.display = "block"; form.reportValidity(); return; }
+    err.style.display = "none";
+    if(document.getElementById("botfield").value){ showConfirm(); return; } /* honeypot: pretend success */
+
+    if(!(SUPABASE_URL && SUPABASE_KEY)){
+      showError("Signing is being set up. Please check back shortly.");
+      return;
+    }
+
+    submit.disabled = true;
+    submit.textContent = "Adding your name…";
+    var roles = Array.prototype.map.call(document.querySelectorAll("input[name=role]:checked"), function(c){ return c.value; }).join(", ");
+    fetch(SUPABASE_URL + "/rest/v1/signatures", {
+        method: "POST",
+        headers: sbHeaders({ "Content-Type": "application/json", "Prefer": "return=minimal" }),
+        body: JSON.stringify({
+          name: document.getElementById("fullname").value.trim(),
+          zip: document.getElementById("zip").value.trim(),
+          email: document.getElementById("email").value.trim().toLowerCase(),
+          roles: roles,
+          message: msg.value.trim(),
+          consent_public: true,
+          consent_contact: document.getElementById("consent-contact").checked
+        })
+      }).then(function(response){
+        if(response.ok || response.status === 409) return showConfirm();
+        throw new Error("The signing service could not save your name.");
+      }).catch(function(){
+        showError("We couldn't add your name just now. Please try again in a moment.");
+      });
+  });
+
+  /* share links */
+  var enc = encodeURIComponent;
+  document.getElementById("sh-bsky").href = "https://bsky.app/intent/compose?text=" + enc(SHARE_TEXT + " " + url);
+  document.getElementById("sh-fb").href = "https://www.facebook.com/sharer/sharer.php?u=" + enc(url);
+  document.getElementById("sh-x").href = "https://twitter.com/intent/tweet?text=" + enc(SHARE_TEXT) + "&url=" + enc(url);
+  document.getElementById("sh-em").href = "mailto:?subject=" + enc("Enough is Enough — sign the open letter to Mayor Wu") + "&body=" + enc(SHARE_TEXT + "\n\n" + url);
+  document.getElementById("copylink").addEventListener("click", function(){
+    navigator.clipboard.writeText(url).then(function(){
+      document.getElementById("copylink").textContent = "Link copied";
+    });
+  });
+})();
+</script>
+</body>
+</html>
