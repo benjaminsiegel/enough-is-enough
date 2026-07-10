@@ -365,7 +365,7 @@ footer a{color:rgba(255,255,255,.9);}
   <div class="rule" aria-hidden="true"></div>
   <p class="sub">An open letter to Mayor Wu from the parents, families, and neighbors of Boston.</p>
   <a class="cta" href="#letter">Read and sign the letter</a>
-  <p class="count" id="sigcount">Help us reach 3,700 signatures &mdash; one hundred for every year of Louisa&rsquo;s life.</p>
+  <p class="count" id="sigcount">Help us reach 3,600 signatures &mdash; one hundred for every year of Louisa&rsquo;s life.</p>
   <div class="goalbar" aria-hidden="true"><div class="goalfill" id="goalfill"></div></div>
 </header>
 
@@ -393,14 +393,14 @@ footer a{color:rgba(255,255,255,.9);}
       <li><strong>Be accountable.</strong> Publish a public timeline for every high-crash corridor — including Tremont Street and Hyde Park Avenue — with a named official responsible for each.</li>
     </ol>
     <p>None of us is willing to raise our families in a city whose leadership will not answer for preventable deaths on its own streets. We are asking you to do what is right. And if you cannot or will not, you will have forfeited the trust a mayor needs to govern — and no study, no statement, and no consensus process will win it back.</p>
-    <p class="signoff">Signed,<br>Your neighbors.</p>
+    <p class="signoff">Signed,<br>The people of Boston who walk, bike, and cross your streets — and who are done waiting.</p>
   </div>
 </section>
 
 <section class="sign" id="sign" aria-label="Sign the letter">
   <div class="sign-inner">
     <h2>Add your name</h2>
-    <p class="why">Louisa was 36 years old — she never reached 37. We are gathering 3,700 signatures, one hundred for every year of a life this city failed to protect. Your name and zip code will be delivered to the Mayor's office, the City Council, and the Interim Chief of Streets with the full letter.</p>
+    <p class="why">Louisa was 36 years old — she never reached 37. We are gathering 3,600 signatures, one hundred for every year of a life this city failed to protect. Your name and zip code will be delivered to the Mayor's office, the City Council, and the Interim Chief of Streets with the full letter.</p>
 
     <form id="sigform" name="signatures" method="POST" data-netlify="true" netlify-honeypot="bot-field" novalidate>
       <input type="hidden" name="form-name" value="signatures">
@@ -454,7 +454,7 @@ footer a{color:rgba(255,255,255,.9);}
 
     <div class="confirm" id="confirm" role="status">
       <h3>Your name has been added.</h3>
-      <p>Thank you for standing with your neighbors. We are gathering 3,700 signatures — one hundred for every year of Louisa's life — and every one will be delivered to the Mayor's office. Help us get there:</p>
+      <p>Thank you for standing with your neighbors. We are gathering 3,600 signatures — one hundred for every year of Louisa's life — and every one will be delivered to the Mayor's office. Help us get there:</p>
       <div class="sharerow">
         <button type="button" id="copylink">Copy link</button>
         <a id="sh-bsky" target="_blank" rel="noopener">Bluesky</a>
@@ -500,7 +500,7 @@ footer a{color:rgba(255,255,255,.9);}
   var SUPABASE_URL = CONFIG.SUPABASE_URL || "";
   var SUPABASE_KEY = CONFIG.SUPABASE_ANON_KEY || "";
 
-  var GOAL = 3700;
+  var GOAL = 3600;
   var SHARE_TEXT = "Boston has been warned for years that delayed street-safety projects would cost lives. Enough is enough. Read and sign the open letter to Mayor Wu:";
   var url = location.origin && location.origin !== "null" ? location.href.split("#")[0] : "https://EXAMPLE.ORG/";
 
@@ -526,7 +526,7 @@ footer a{color:rgba(255,255,255,.9);}
   /* signature wall + live count (Supabase). Falls back to count.json if Supabase isn't configured. */
   function renderCount(n){
     document.getElementById("sigcount").textContent =
-      n.toLocaleString() + " of 3,700 neighbors have signed \u2014 one hundred names for every year of Louisa\u2019s life.";
+      n.toLocaleString() + " of 3,600 neighbors have signed \u2014 one hundred names for every year of Louisa\u2019s life.";
     document.getElementById("goalfill").style.width = Math.min(100, (n / GOAL) * 100) + "%";
   }
   function lastNameKey(name){
@@ -561,7 +561,7 @@ footer a{color:rgba(255,255,255,.9);}
         box.appendChild(div);
       });
       document.getElementById("wallcount").textContent =
-        n.toLocaleString() + " of 3,700 — in alphabetical order.";
+        n.toLocaleString() + " of 3,600 — in alphabetical order.";
       document.getElementById("wall").style.display = "block";
     }).catch(function(){});
   }
