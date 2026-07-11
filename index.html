@@ -308,7 +308,35 @@ textarea{resize:vertical;min-height:5.5rem;line-height:1.5;}
   font-size:.95rem;
   line-height:2;
 }
-.wallnames div{break-inside:avoid;}
+.wallnames .signer{break-inside:avoid;position:relative;}
+.wallnames .signer.has-comment{cursor:help;outline:none;}
+.wallnames .signer.has-comment:focus-visible{outline:3px solid var(--paint);outline-offset:3px;}
+.comment-tooltip{
+  display:none;
+  position:absolute;
+  z-index:10;
+  left:0;
+  bottom:calc(100% + .55rem);
+  width:min(300px,78vw);
+  padding:.85rem 1rem;
+  background:var(--asphalt);
+  color:rgba(255,255,255,.92);
+  font-family:'Source Serif 4',serif;
+  font-size:.95rem;
+  font-style:italic;
+  line-height:1.45;
+  box-shadow:0 8px 22px rgba(0,0,0,.2);
+}
+.comment-tooltip::after{
+  content:"";
+  position:absolute;
+  left:1rem;
+  top:100%;
+  border:7px solid transparent;
+  border-top-color:var(--asphalt);
+}
+.signer.has-comment:hover .comment-tooltip,
+.signer.has-comment:focus .comment-tooltip{display:block;}
 .wallnames span.z{color:var(--concrete);font-size:.82rem;}
 
 /* ---------- memorial ---------- */
@@ -440,7 +468,7 @@ footer a{color:rgba(255,255,255,.9);}
 
       <label class="consent">
         <input type="checkbox" id="consent-public" name="consent_public" value="yes" required>
-        <span>Display my name and zip code publicly as a signatory. <strong>(required)</strong></span>
+        <span>Display my name, zip code, and message publicly as a signatory. <strong>(required)</strong></span>
       </label>
       <label class="consent">
         <input type="checkbox" name="consent_contact" id="consent-contact" value="yes">
@@ -449,7 +477,7 @@ footer a{color:rgba(255,255,255,.9);}
 
       <button class="submit" type="submit">Add my name</button>
       <p class="err" id="formerr">Please complete the required fields above.</p>
-      <p class="fineprint">Names and zip codes are published with your consent. Emails are never published or shared, and are used only to deliver this letter and send one follow-up.</p>
+      <p class="fineprint">Names, zip codes, and messages are published with your consent. Emails are never published or shared, and are used only to deliver this letter and send one follow-up.</p>
     </form>
 
     <div class="confirm" id="confirm" role="status">
@@ -485,7 +513,7 @@ footer a{color:rgba(255,255,255,.9);}
 <footer>
   <p>A volunteer effort of Boston residents. Not affiliated with any organization.</p>
   <p>Press: <a href="#" id="pressmail">contact by email</a></p>
-  <p>Names and zip codes are published only with signers' consent. Emails are never shared.</p>
+  <p>Names, zip codes, and messages are published with signers' consent. Emails are never shared.</p>
 </footer>
 
 <div class="stickycta" id="stickycta" aria-hidden="true">
@@ -535,7 +563,7 @@ footer a{color:rgba(255,255,255,.9);}
   }
   function loadWall(){
     if(!SUPABASE_URL || !SUPABASE_KEY) return;
-    fetch(SUPABASE_URL + "/rest/v1/public_signatures?select=name,zip", {
+    fetch(SUPABASE_URL + "/rest/v1/public_signatures?select=name,zip,message", {
       headers: sbHeaders({ "Prefer": "count=exact", "Range-Unit": "items", "Range": "0-9999" })
     }).then(function(r){
       var total = null;
@@ -551,13 +579,26 @@ footer a{color:rgba(255,255,255,.9);}
       });
       var box = document.getElementById("wallnames");
       box.innerHTML = "";
-      d.rows.forEach(function(row){
+      d.rows.forEach(function(row, index){
         var div = document.createElement("div");
+        div.className = "signer";
         div.textContent = row.name + " ";
         var z = document.createElement("span");
         z.className = "z";
         z.textContent = row.zip;
         div.appendChild(z);
+        if(row.message && row.message.trim()){
+          var tip = document.createElement("span");
+          var tipId = "comment-" + index;
+          tip.className = "comment-tooltip";
+          tip.id = tipId;
+          tip.setAttribute("role", "tooltip");
+          tip.textContent = row.message.trim();
+          div.classList.add("has-comment");
+          div.tabIndex = 0;
+          div.setAttribute("aria-describedby", tipId);
+          div.appendChild(tip);
+        }
         box.appendChild(div);
       });
       document.getElementById("wallcount").textContent =
