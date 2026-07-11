@@ -302,6 +302,11 @@ textarea{resize:vertical;min-height:5.5rem;line-height:1.5;}
   font-family:'Source Serif 4',serif;
   font-size:1.05rem;color:var(--ink);margin-bottom:2rem;
 }
+.wall .wallhint{
+  font-size:.85rem;
+  color:var(--concrete);
+  margin:-1.35rem 0 1.8rem;
+}
 .wallnames{
   columns:3 220px;
   column-gap:2.2rem;
@@ -311,6 +316,16 @@ textarea{resize:vertical;min-height:5.5rem;line-height:1.5;}
 .wallnames .signer{break-inside:avoid;position:relative;}
 .wallnames .signer.has-comment{cursor:help;outline:none;}
 .wallnames .signer.has-comment:focus-visible{outline:3px solid var(--paint);outline-offset:3px;}
+.comment-marker{
+  display:inline-block;
+  width:.55rem;
+  height:.55rem;
+  margin-left:.32rem;
+  border-radius:50%;
+  background:var(--paint);
+  vertical-align:middle;
+  transform:translateY(-.04rem);
+}
 .comment-tooltip{
   display:none;
   position:absolute;
@@ -498,6 +513,7 @@ footer a{color:rgba(255,255,255,.9);}
   <div class="wall-inner">
     <h2>Signed by</h2>
     <p class="wallcount" id="wallcount"></p>
+    <p class="wallhint">A yellow dot marks a signer who left a note — hover or focus their name to read it.</p>
     <div class="wallnames" id="wallnames"></div>
   </div>
 </section>
@@ -597,6 +613,10 @@ footer a{color:rgba(255,255,255,.9);}
           div.classList.add("has-comment");
           div.tabIndex = 0;
           div.setAttribute("aria-describedby", tipId);
+          var marker = document.createElement("span");
+          marker.className = "comment-marker";
+          marker.setAttribute("aria-hidden", "true");
+          div.appendChild(marker);
           div.appendChild(tip);
         }
         box.appendChild(div);
