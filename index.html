@@ -116,6 +116,14 @@ a{color:inherit;}
   background:var(--paint);
   transition:width .8s ease;
 }
+.milestone{
+  margin-top:.75rem;
+  font-size:.78rem;
+  font-weight:600;
+  letter-spacing:.08em;
+  text-transform:uppercase;
+  color:var(--ink);
+}
 
 /* ---------- letter ---------- */
 .letter{
@@ -410,6 +418,7 @@ footer a{color:rgba(255,255,255,.9);}
   <a class="cta" href="#letter">Read and sign the letter</a>
   <p class="count" id="sigcount">Help us reach 3,600 signatures &mdash; one hundred for every year of Louisa&rsquo;s life.</p>
   <div class="goalbar" aria-hidden="true"><div class="goalfill" id="goalfill"></div></div>
+  <p class="milestone" id="goalstatus">Nearly a quarter of the way there.</p>
 </header>
 
 <main>
@@ -443,7 +452,7 @@ footer a{color:rgba(255,255,255,.9);}
 <section class="sign" id="sign" aria-label="Sign the letter">
   <div class="sign-inner">
     <h2>Add your name</h2>
-    <p class="why">Louisa was 36 years old — she never reached 37. We are gathering 3,600 signatures, one hundred for every year of a life this city failed to protect. Your name and zip code will be delivered to the Mayor's office, the City Council, and the Interim Chief of Streets with the full letter.</p>
+    <p class="why"><strong id="signup-milestone">We&rsquo;re nearly a quarter of the way toward our goal of gathering 3,600 signatures.</strong> Louisa was 36 years old — she never reached 37. Your name and zip code will be delivered to the Mayor's office, the City Council, and the Interim Chief of Streets with the full letter.</p>
 
     <form id="sigform" name="signatures" method="POST" data-netlify="true" netlify-honeypot="bot-field" novalidate>
       <input type="hidden" name="form-name" value="signatures">
@@ -569,9 +578,15 @@ footer a{color:rgba(255,255,255,.9);}
 
   /* signature wall + live count (Supabase). Falls back to count.json if Supabase isn't configured. */
   function renderCount(n){
+    var milestone = n >= GOAL * .25
+      ? "More than a quarter of the way there."
+      : "Nearly a quarter of the way there.";
     document.getElementById("sigcount").textContent =
       n.toLocaleString() + " of 3,600 neighbors have signed \u2014 one hundred names for every year of Louisa\u2019s life.";
     document.getElementById("goalfill").style.width = Math.min(100, (n / GOAL) * 100) + "%";
+    document.getElementById("goalstatus").textContent = milestone;
+    document.getElementById("signup-milestone").textContent =
+      milestone.replace("there.", "toward our goal of gathering 3,600 signatures.");
   }
   function lastNameKey(name){
     var parts = name.trim().split(/\s+/);
