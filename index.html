@@ -57,6 +57,35 @@ a{color:inherit;}
 .hero{
   padding:clamp(3.5rem,10vw,7rem) 1.25rem clamp(3rem,8vw,5.5rem);
   text-align:center;
+  position:relative;
+  overflow:hidden;
+  isolation:isolate;
+  background:#fff;
+}
+.hero-video{
+  position:absolute;
+  inset:0;
+  z-index:0;
+  width:100%;
+  height:100%;
+  object-fit:cover;
+  object-position:center 45%;
+  opacity:.72;
+  pointer-events:none;
+}
+.hero::before{
+  content:"";
+  position:absolute;
+  inset:0;
+  z-index:1;
+  background:radial-gradient(ellipse 74% 76% at 50% 48%,
+    rgba(255,255,255,.88) 0%,
+    rgba(255,255,255,.72) 48%,
+    rgba(255,255,255,.30) 100%);
+}
+.hero > :not(.hero-video){
+  position:relative;
+  z-index:2;
 }
 .hero h1{
   font-family:'Archivo Black',sans-serif;
@@ -65,6 +94,7 @@ a{color:inherit;}
   letter-spacing:-.015em;
   text-transform:uppercase;
   color:var(--ink);
+  text-shadow:0 1px 0 rgba(255,255,255,.7);
 }
 .rule{
   height:10px;
@@ -77,6 +107,7 @@ a{color:inherit;}
 @keyframes drawin{to{width:min(78vw,880px);}}
 @media (prefers-reduced-motion: reduce){
   .rule{width:min(78vw,880px);}
+  .hero-video{display:none;}
 }
 .hero .sub{
   font-family:'Source Serif 4',serif;
@@ -99,11 +130,17 @@ a{color:inherit;}
 }
 .hero .cta:hover{background:#000;}
 .hero .count{
-  margin-top:1.4rem;
+  display:table;
+  margin:1.4rem auto 0;
+  padding:.35rem .65rem;
+  background:rgba(255,255,255,.78);
+  box-shadow:0 1px 0 rgba(255,255,255,.8);
   font-size:.9rem;
-  color:var(--concrete);
+  font-weight:600;
+  color:var(--ink);
   letter-spacing:.04em;
 }
+
 .goalbar{
   max-width:min(78vw,880px);
   margin:.9rem auto 0;
@@ -412,6 +449,9 @@ footer a{color:rgba(255,255,255,.9);}
 <div class="topband">An open letter to Mayor Michelle Wu &nbsp;·&nbsp; Boston &nbsp;·&nbsp; July 2026</div>
 
 <header class="hero">
+  <video class="hero-video" autoplay muted loop playsinline preload="metadata" aria-hidden="true">
+    <source src="vigil.mp4" type="video/mp4">
+  </video>
   <h1>Enough<br>is Enough</h1>
   <div class="rule" aria-hidden="true"></div>
   <p class="sub">An open letter to Mayor Wu from the parents, families, and neighbors of Boston.</p>
