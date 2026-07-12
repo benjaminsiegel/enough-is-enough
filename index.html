@@ -134,6 +134,26 @@ a{color:inherit;}
   padding:1rem 2.2rem;
 }
 .hero .cta:hover{background:var(--paint);color:var(--ink);}
+.hero-actions{
+  display:flex;
+  justify-content:center;
+  align-items:center;
+  flex-wrap:wrap;
+  gap:.7rem;
+  margin-top:2.2rem;
+}
+.hero-actions .cta{margin-top:0;}
+.notes-trigger{
+  border:1px solid rgba(20,20,20,.68);
+  background:rgba(255,255,255,.56);
+  color:var(--ink);
+  font:600 .9rem 'Archivo',sans-serif;
+  letter-spacing:.01em;
+  padding:.95rem 1.15rem;
+  cursor:pointer;
+}
+.notes-trigger:hover{background:var(--ink);border-color:var(--ink);color:#fff;}
+.notes-trigger:focus-visible,.notes-close:focus-visible{outline:3px solid var(--paint);outline-offset:3px;}
 .hero .count{
   display:table;
   margin:1.4rem auto 0;
@@ -164,6 +184,115 @@ a{color:inherit;}
   letter-spacing:.08em;
   text-transform:uppercase;
   color:var(--ink);
+}
+
+/* ---------- notes to the mayor ---------- */
+body.notes-open{overflow:hidden;}
+.notes-overlay{
+  position:fixed;
+  z-index:100;
+  inset:0;
+  display:grid;
+  place-items:center;
+  padding:clamp(1rem,4vw,3rem);
+  background:rgba(15,16,17,.72);
+}
+.notes-overlay[hidden]{display:none;}
+.notes-dialog{
+  width:min(100%,700px);
+  max-height:min(88vh,860px);
+  display:flex;
+  flex-direction:column;
+  overflow:hidden;
+  border:1px solid rgba(255,255,255,.38);
+  background:#fcfbf8;
+  box-shadow:0 24px 80px rgba(0,0,0,.35);
+}
+.notes-head{
+  position:relative;
+  flex:0 0 auto;
+  padding:clamp(1.3rem,3.4vw,2rem) clamp(1.2rem,3.5vw,2rem) 1rem;
+  border-bottom:1px solid var(--hairline);
+  background:#fff;
+}
+.notes-kicker{
+  margin:0 0 .55rem;
+  color:var(--concrete);
+  font-size:.75rem;
+  font-weight:600;
+  letter-spacing:.13em;
+  text-transform:uppercase;
+}
+.notes-kicker::before{
+  content:"";
+  display:block;
+  width:32px;
+  height:3px;
+  margin-bottom:.65rem;
+  background:var(--paint);
+}
+.notes-head h2{
+  margin:0;
+  max-width:12ch;
+  font-family:'Archivo Black',sans-serif;
+  font-size:clamp(1.8rem,5.2vw,2.75rem);
+  line-height:.98;
+  letter-spacing:-.025em;
+  text-transform:uppercase;
+}
+.notes-summary{
+  margin:.6rem 3rem 0 0;
+  color:var(--concrete);
+  font-size:.84rem;
+}
+.notes-close{
+  position:absolute;
+  top:1rem;
+  right:1rem;
+  width:2.1rem;
+  height:2.1rem;
+  border:1px solid var(--hairline);
+  background:#fff;
+  color:var(--ink);
+  font-size:1.45rem;
+  line-height:1;
+  cursor:pointer;
+}
+.notes-list{flex:1 1 auto;min-height:0;overflow-y:auto;padding:0 clamp(1.2rem,3.5vw,2rem);scrollbar-color:var(--concrete) transparent;}
+.mayor-note{
+  margin:0;
+  padding:clamp(1.05rem,2.5vw,1.55rem) 0;
+  border-bottom:1px solid var(--hairline);
+}
+.mayor-note:last-child{border-bottom:0;}
+.mayor-note blockquote{
+  margin:0;
+  color:var(--ink);
+  font-family:'Source Serif 4',serif;
+  font-size:clamp(1rem,2.2vw,1.16rem);
+  line-height:1.48;
+  text-wrap:pretty;
+}
+.mayor-note blockquote::before{content:"“";color:var(--paint);font-size:1.55em;line-height:0;vertical-align:-.18em;}
+.mayor-note footer{
+  margin-top:.65rem;
+  padding:0;
+  border:0;
+  background:transparent;
+  color:var(--concrete);
+  font-size:.76rem;
+  font-weight:600;
+  line-height:1.3;
+  letter-spacing:.05em;
+  text-align:left;
+  text-transform:uppercase;
+}
+.mayor-note .note-zip{margin-left:.65rem;font-weight:400;}
+@media (max-width:560px){
+  .hero-actions{flex-direction:column;align-items:stretch;max-width:21rem;margin-left:auto;margin-right:auto;}
+  .hero-actions .cta,.notes-trigger{text-align:center;}
+  .notes-overlay{padding:0;}
+  .notes-dialog{width:100%;height:100%;max-height:none;}
 }
 
 /* ---------- letter ---------- */
@@ -531,7 +660,10 @@ footer a{color:rgba(255,255,255,.9);}
   <h1>Enough<br>is Enough</h1>
   <div class="rule" aria-hidden="true"></div>
   <p class="sub">An open letter to Mayor Wu from the parents, families, and neighbors of Boston.</p>
-  <a class="cta" href="#letter">Read and sign the letter</a>
+  <div class="hero-actions">
+    <a class="cta" href="#letter">Read and sign the letter</a>
+    <button class="notes-trigger" id="notes-trigger" type="button" hidden>Read notes to the Mayor</button>
+  </div>
   <p class="count" id="sigcount">Neighbors have signed.</p>
   <div class="goalbar" aria-hidden="true"><div class="goalfill" id="goalfill"></div></div>
 </header>
@@ -697,6 +829,18 @@ footer a{color:rgba(255,255,255,.9);}
   <a href="#sign">Add my name <span>&rarr;</span></a>
 </div>
 
+<div class="notes-overlay" id="notes-overlay" hidden>
+  <section class="notes-dialog" id="notes-dialog" role="dialog" aria-modal="true" aria-labelledby="notes-title" tabindex="-1">
+    <header class="notes-head">
+      <p class="notes-kicker">In our own words</p>
+      <h2 id="notes-title">Notes to the Mayor</h2>
+      <p class="notes-summary" id="notes-summary"></p>
+      <button class="notes-close" id="notes-close" type="button" aria-label="Close notes">&times;</button>
+    </header>
+    <div class="notes-list" id="notes-list"></div>
+  </section>
+</div>
+
 <script src="config.js"></script>
 <script>
 (function(){
@@ -748,6 +892,51 @@ footer a{color:rgba(255,255,255,.9);}
     var parts = name.trim().split(/\s+/);
     return (parts[parts.length - 1] + " " + name).toLowerCase();
   }
+  var notesTrigger = document.getElementById("notes-trigger");
+  var notesOverlay = document.getElementById("notes-overlay");
+  var notesDialog = document.getElementById("notes-dialog");
+  var notesClose = document.getElementById("notes-close");
+  var notesList = document.getElementById("notes-list");
+  var notesSummary = document.getElementById("notes-summary");
+  var notesRenderKey = "";
+  var notesPreviousFocus = null;
+
+  function closeNotes(){
+    if(notesOverlay.hidden) return;
+    notesOverlay.hidden = true;
+    document.body.classList.remove("notes-open");
+    if(notesPreviousFocus) notesPreviousFocus.focus();
+  }
+  function renderNotes(rows){
+    var key = rows.map(function(row){ return row.name + "\u0001" + row.zip + "\u0001" + row.message; }).join("\u0002");
+    if(key === notesRenderKey) return;
+    notesRenderKey = key;
+    notesList.innerHTML = "";
+    rows.forEach(function(row){
+      var note = document.createElement("article");
+      note.className = "mayor-note";
+      var quote = document.createElement("blockquote");
+      quote.textContent = row.message.trim();
+      var footer = document.createElement("footer");
+      footer.textContent = row.name;
+      var zip = document.createElement("span");
+      zip.className = "note-zip";
+      zip.textContent = row.zip;
+      footer.appendChild(zip);
+      note.appendChild(quote);
+      note.appendChild(footer);
+      notesList.appendChild(note);
+    });
+  }
+  notesTrigger.addEventListener("click", function(){
+    notesPreviousFocus = document.activeElement;
+    notesOverlay.hidden = false;
+    document.body.classList.add("notes-open");
+    notesDialog.focus();
+  });
+  notesClose.addEventListener("click", closeNotes);
+  notesOverlay.addEventListener("click", function(e){ if(e.target === notesOverlay) closeNotes(); });
+  document.addEventListener("keydown", function(e){ if(e.key === "Escape") closeNotes(); });
   var BOSTON_ZIPS = {
     "02108":true,"02109":true,"02110":true,"02111":true,"02112":true,"02113":true,"02114":true,"02115":true,"02116":true,"02117":true,
     "02118":true,"02119":true,"02120":true,"02121":true,"02122":true,"02123":true,"02124":true,"02125":true,"02126":true,
@@ -828,10 +1017,16 @@ footer a{color:rgba(255,255,255,.9);}
       if(!d.rows || !d.rows.length) return;
       var n = (d.total !== null && !isNaN(d.total)) ? d.total : d.rows.length;
       renderCount(n);
-      var commentCount = d.rows.filter(function(row){ return row.message && row.message.trim(); }).length;
+      var commentRows = d.rows.filter(function(row){ return row.message && row.message.trim(); });
+      commentRows.sort(function(a,b){ return lastNameKey(a.name).localeCompare(lastNameKey(b.name), undefined, {sensitivity:"base"}); });
+      var commentCount = commentRows.length;
       document.getElementById("wallhint").textContent =
         "A yellow dot marks a signer who left a note — hover or focus their name to read one of " +
         commentCount.toLocaleString() + " comments to the Mayor.";
+      notesTrigger.hidden = !commentCount;
+      notesTrigger.textContent = "Read " + commentCount.toLocaleString() + " " + (commentCount === 1 ? "note" : "notes") + " to the Mayor";
+      notesSummary.textContent = commentCount.toLocaleString() + " " + (commentCount === 1 ? "note" : "notes") + " from signatories, alphabetized by last name.";
+      renderNotes(commentRows);
       d.rows.sort(function(a,b){
         return lastNameKey(a.name).localeCompare(lastNameKey(b.name), undefined, {sensitivity:"base"});
       });
