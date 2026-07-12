@@ -581,7 +581,7 @@ footer a{color:rgba(255,255,255,.9);}
 <section class="sign" id="sign" aria-label="Sign the letter">
   <div class="sign-inner">
     <h2>Add your name</h2>
-    <p class="why"><strong id="signup-milestone">We&rsquo;re more than a third of the way toward our goal of gathering 3,600 signatures.</strong> Louisa was 36 years old — she never reached 37. Your name and zip code will be delivered to the Mayor's office, the City Council, and the Interim Chief of Streets with the full letter.</p>
+    <p class="why"><strong id="signup-milestone">We are aiming for 3600 signatures in commemoration of Louisa's 36 years before Monday, July 13, at 9 a.m.</strong> Your name and zip code will be delivered to the Mayor's office, the City Council, and the Interim Chief of Streets with the full letter.</p>
 
     <form id="sigform" name="signatures" method="POST" data-netlify="true" netlify-honeypot="bot-field" novalidate>
       <input type="hidden" name="form-name" value="signatures">
@@ -743,8 +743,6 @@ footer a{color:rgba(255,255,255,.9);}
     document.getElementById("sigcount").textContent =
       n.toLocaleString() + " neighbors have signed.";
     document.getElementById("goalfill").style.width = Math.min(100, (n / GOAL) * 100) + "%";
-    document.getElementById("signup-milestone").textContent =
-      nextGoalPrompt(n) + " Add yours before the 9 a.m. Monday delivery.";
   }
   function lastNameKey(name){
     var parts = name.trim().split(/\s+/);
