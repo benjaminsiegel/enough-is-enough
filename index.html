@@ -651,7 +651,7 @@ footer a{color:rgba(255,255,255,.9);}
   <div class="wall-inner">
     <h2>Signed by</h2>
     <p class="wallcount" id="wallcount"></p>
-    <p class="wallhint">A yellow dot marks a signer who left a note — hover or focus their name to read it.</p>
+    <p class="wallhint" id="wallhint">A yellow dot marks a signer who left a note — hover or focus their name to read one of the comments to the Mayor.</p>
     <div class="signer-group">
       <p class="signer-group-label" id="boston-label">Boston signatories</p>
       <div class="wallnames" id="wallnames"></div>
@@ -828,6 +828,10 @@ footer a{color:rgba(255,255,255,.9);}
       if(!d.rows || !d.rows.length) return;
       var n = (d.total !== null && !isNaN(d.total)) ? d.total : d.rows.length;
       renderCount(n);
+      var commentCount = d.rows.filter(function(row){ return row.message && row.message.trim(); }).length;
+      document.getElementById("wallhint").textContent =
+        "A yellow dot marks a signer who left a note — hover or focus their name to read one of " +
+        commentCount.toLocaleString() + " comments to the Mayor.";
       d.rows.sort(function(a,b){
         return lastNameKey(a.name).localeCompare(lastNameKey(b.name), undefined, {sensitivity:"base"});
       });
