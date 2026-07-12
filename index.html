@@ -79,7 +79,7 @@ a{color:inherit;}
   height:100%;
   object-fit:cover;
   object-position:center 45%;
-  opacity:.72;
+  opacity:.8;
   pointer-events:none;
 }
 .hero::before{
@@ -87,10 +87,7 @@ a{color:inherit;}
   position:absolute;
   inset:0;
   z-index:1;
-  background:radial-gradient(ellipse 74% 76% at 50% 48%,
-    rgba(255,255,255,.88) 0%,
-    rgba(255,255,255,.72) 48%,
-    rgba(255,255,255,.30) 100%);
+  background:linear-gradient(rgba(255,255,255,.78), rgba(255,255,255,.62) 60%, rgba(255,255,255,.9));
 }
 .hero > :not(.hero-video){
   position:relative;
@@ -103,11 +100,10 @@ a{color:inherit;}
   letter-spacing:-.015em;
   text-transform:uppercase;
   color:var(--ink);
-  text-shadow:0 1px 0 rgba(255,255,255,.7);
 }
 .rule{
-  height:10px;
-  background:var(--paint);
+  height:8px;
+  background:repeating-linear-gradient(90deg, var(--paint) 0 44px, transparent 44px 72px);
   width:0;
   max-width:min(78vw,880px);
   margin:1.1rem auto 0;
@@ -137,7 +133,7 @@ a{color:inherit;}
   letter-spacing:.02em;
   padding:1rem 2.2rem;
 }
-.hero .cta:hover{background:#000;}
+.hero .cta:hover{background:var(--paint);color:var(--ink);}
 .hero .count{
   display:table;
   margin:1.4rem auto 0;
@@ -149,7 +145,6 @@ a{color:inherit;}
   color:var(--ink);
   letter-spacing:.04em;
 }
-
 .goalbar{
   max-width:min(78vw,880px);
   margin:.9rem auto 0;
@@ -234,7 +229,7 @@ a{color:inherit;}
   content:"";
   position:absolute;
   left:0;
-  top:1.75rem;
+  top:1.9rem;
   width:1.7rem;
   height:4px;
   background:var(--paint);
@@ -340,6 +335,7 @@ textarea{resize:vertical;min-height:5.5rem;line-height:1.5;}
   background:#fff;
   cursor:pointer;
 }
+#zip{max-width:9ch;}
 .chip input{accent-color:var(--ink);width:1.05rem;height:1.05rem;}
 .chip:has(input:checked){background:var(--ink);color:#fff;}
 .charnote{font-size:.8rem;color:var(--concrete);margin-top:.35rem;}
@@ -412,9 +408,9 @@ textarea{resize:vertical;min-height:5.5rem;line-height:1.5;}
 }
 .signer-group-label{
   margin:0 0 .65rem;
-  font-family:'Oswald',sans-serif;
+  font-family:'Archivo',sans-serif;
   font-size:.84rem;
-  font-weight:500;
+  font-weight:600;
   letter-spacing:.13em;
   text-transform:uppercase;
   color:var(--concrete);
@@ -425,9 +421,9 @@ textarea{resize:vertical;min-height:5.5rem;line-height:1.5;}
   gap:.9rem;
   margin:3rem 0 1.3rem;
   color:var(--concrete);
-  font-family:'Oswald',sans-serif;
+  font-family:'Archivo',sans-serif;
   font-size:.84rem;
-  font-weight:500;
+  font-weight:600;
   letter-spacing:.13em;
   text-transform:uppercase;
 }
@@ -536,9 +532,8 @@ footer a{color:rgba(255,255,255,.9);}
   <div class="rule" aria-hidden="true"></div>
   <p class="sub">An open letter to Mayor Wu from the parents, families, and neighbors of Boston.</p>
   <a class="cta" href="#letter">Read and sign the letter</a>
-  <p class="count" id="sigcount">Help us reach 3,600 signatures &mdash; one hundred for every year of Louisa&rsquo;s life.</p>
+  <p class="count" id="sigcount">Neighbors have signed.</p>
   <div class="goalbar" aria-hidden="true"><div class="goalfill" id="goalfill"></div></div>
-  <p class="milestone" id="goalstatus">More than a third of the way there.</p>
 </header>
 
 <main>
@@ -745,21 +740,9 @@ footer a{color:rgba(255,255,255,.9);}
     return needed.toLocaleString() + " more " + (needed === 1 ? "name" : "names") + " to reach " + label + ".";
   }
   function renderCount(n){
-    var milestone = n >= GOAL * .75
-      ? "More than three quarters of the way there."
-      : n >= GOAL * (2 / 3)
-        ? "More than two thirds of the way there."
-        : n >= GOAL * .5
-          ? "More than halfway there."
-        : n >= GOAL * (1 / 3)
-            ? "Almost halfway there."
-            : n >= GOAL * .25
-              ? "More than a quarter of the way there."
-              : "Nearly a quarter of the way there.";
     document.getElementById("sigcount").textContent =
-      n.toLocaleString() + " neighbors have signed \u2014 " + nextGoalPrompt(n);
+      n.toLocaleString() + " neighbors have signed.";
     document.getElementById("goalfill").style.width = Math.min(100, (n / GOAL) * 100) + "%";
-    document.getElementById("goalstatus").textContent = milestone;
     document.getElementById("signup-milestone").textContent =
       nextGoalPrompt(n) + " Add yours before the 9 a.m. Monday delivery.";
   }
