@@ -358,6 +358,34 @@ textarea{resize:vertical;min-height:5.5rem;line-height:1.5;}
   font-size:.95rem;
   line-height:2;
 }
+.signer-group-label{
+  margin:0 0 .65rem;
+  font-family:'Oswald',sans-serif;
+  font-size:.84rem;
+  font-weight:500;
+  letter-spacing:.13em;
+  text-transform:uppercase;
+  color:var(--concrete);
+}
+.signer-divider{
+  display:flex;
+  align-items:center;
+  gap:.9rem;
+  margin:3rem 0 1.3rem;
+  color:var(--concrete);
+  font-family:'Oswald',sans-serif;
+  font-size:.84rem;
+  font-weight:500;
+  letter-spacing:.13em;
+  text-transform:uppercase;
+}
+.signer-divider::before,
+.signer-divider::after{
+  content:"";
+  height:1px;
+  flex:1;
+  background:rgba(22,22,22,.18);
+}
 .wallnames .signer{break-inside:avoid;position:relative;}
 .wallnames .signer.has-comment{cursor:help;outline:none;}
 .wallnames .signer.has-comment:focus-visible{outline:3px solid var(--paint);outline-offset:3px;}
@@ -563,7 +591,30 @@ footer a{color:rgba(255,255,255,.9);}
     <h2>Signed by</h2>
     <p class="wallcount" id="wallcount"></p>
     <p class="wallhint">A yellow dot marks a signer who left a note — hover or focus their name to read it.</p>
-    <div class="wallnames" id="wallnames"></div>
+    <div class="signer-group">
+      <p class="signer-group-label" id="boston-label">Boston signatories</p>
+      <div class="wallnames" id="wallnames"></div>
+    </div>
+    <div class="signer-group" id="somerville-group" hidden>
+      <div class="signer-divider"><span id="somerville-label">Somerville signatories</span></div>
+      <div class="wallnames" id="somerville-wallnames"></div>
+    </div>
+    <div class="signer-group" id="cambridge-group" hidden>
+      <div class="signer-divider"><span id="cambridge-label">Cambridge signatories</span></div>
+      <div class="wallnames" id="cambridge-wallnames"></div>
+    </div>
+    <div class="signer-group" id="brookline-group" hidden>
+      <div class="signer-divider"><span id="brookline-label">Brookline signatories</span></div>
+      <div class="wallnames" id="brookline-wallnames"></div>
+    </div>
+    <div class="signer-group" id="massachusetts-group" hidden>
+      <div class="signer-divider"><span id="massachusetts-label">Elsewhere in Massachusetts</span></div>
+      <div class="wallnames" id="massachusetts-wallnames"></div>
+    </div>
+    <div class="signer-group" id="elsewhere-group" hidden>
+      <div class="signer-divider"><span id="elsewhere-label">Elsewhere</span></div>
+      <div class="wallnames" id="elsewhere-wallnames"></div>
+    </div>
   </div>
 </section>
 
@@ -640,49 +691,110 @@ footer a{color:rgba(255,255,255,.9);}
     var parts = name.trim().split(/\s+/);
     return (parts[parts.length - 1] + " " + name).toLowerCase();
   }
+  var BOSTON_ZIPS = {
+    "02108":true,"02109":true,"02110":true,"02111":true,"02112":true,"02113":true,"02114":true,"02115":true,"02116":true,"02117":true,
+    "02118":true,"02119":true,"02120":true,"02121":true,"02122":true,"02123":true,"02124":true,"02125":true,"02126":true,
+    "02127":true,"02128":true,"02129":true,"02130":true,"02131":true,"02132":true,"02133":true,"02134":true,
+    "02135":true,"02136":true,"02137":true,"02163":true,"02196":true,"02199":true,"02201":true,"02202":true,
+    "02203":true,"02204":true,"02205":true,"02206":true,"02207":true,"02208":true,"02209":true,"02210":true,
+    "02211":true,"02212":true,"02213":true,"02214":true,"02215":true,"02216":true,"02217":true
+  };
+  var SOMERVILLE_ZIPS = { "02143":true, "02144":true, "02145":true };
+  var CAMBRIDGE_ZIPS = { "02138":true, "02139":true, "02140":true, "02141":true, "02142":true };
+  var BROOKLINE_ZIPS = { "02445":true, "02446":true, "02447":true, "02467":true };
+  function isBostonZip(zip){
+    return !!BOSTON_ZIPS[String(zip || "").trim()];
+  }
+  function isMassachusettsZip(zip){
+    zip = String(zip || "").trim();
+    return /^(?:0(?:1\d|2[0-7])\d{2}|055\d{2})$/.test(zip);
+  }
+  function signerGroup(zip){
+    zip = String(zip || "").trim();
+    if(BOSTON_ZIPS[zip]) return "boston";
+    if(SOMERVILLE_ZIPS[zip]) return "somerville";
+    if(CAMBRIDGE_ZIPS[zip]) return "cambridge";
+    if(BROOKLINE_ZIPS[zip]) return "brookline";
+    return isMassachusettsZip(zip) ? "massachusetts" : "elsewhere";
+  }
+  function renderSignerList(box, rows, startIndex){
+    rows.forEach(function(row, index){
+      var div = document.createElement("div");
+      div.className = "signer";
+      div.textContent = row.name + " ";
+      var z = document.createElement("span");
+      z.className = "z";
+      z.textContent = row.zip;
+      div.appendChild(z);
+      if(row.message && row.message.trim()){
+        var tip = document.createElement("span");
+        var tipId = "comment-" + (startIndex + index);
+        tip.className = "comment-tooltip";
+        tip.id = tipId;
+        tip.setAttribute("role", "tooltip");
+        tip.textContent = row.message.trim();
+        div.classList.add("has-comment");
+        div.tabIndex = 0;
+        div.setAttribute("aria-describedby", tipId);
+        var marker = document.createElement("span");
+        marker.className = "comment-marker";
+        marker.setAttribute("aria-hidden", "true");
+        div.appendChild(marker);
+        div.appendChild(tip);
+      }
+      box.appendChild(div);
+    });
+  }
+  function fetchAllSignatures(start, rows, total){
+    return fetch(SUPABASE_URL + "/rest/v1/public_signatures?select=name,zip,message", {
+      headers: sbHeaders({
+        "Prefer": "count=exact",
+        "Range-Unit": "items",
+        "Range": start + "-" + (start + 999)
+      })
+    }).then(function(r){
+      var cr = r.headers.get("content-range");
+      var nextTotal = total;
+      if(cr && cr.indexOf("/") > -1) nextTotal = parseInt(cr.split("/")[1], 10);
+      return r.json().then(function(page){
+        var allRows = rows.concat(page);
+        if(page.length === 1000 && (nextTotal === null || allRows.length < nextTotal)){
+          return fetchAllSignatures(allRows.length, allRows, nextTotal);
+        }
+        return { rows: allRows, total: nextTotal };
+      });
+    });
+  }
   function loadWall(){
     if(!SUPABASE_URL || !SUPABASE_KEY) return;
-    fetch(SUPABASE_URL + "/rest/v1/public_signatures?select=name,zip,message", {
-      headers: sbHeaders({ "Prefer": "count=exact", "Range-Unit": "items", "Range": "0-9999" })
-    }).then(function(r){
-      var total = null;
-      var cr = r.headers.get("content-range");
-      if(cr && cr.indexOf("/") > -1) total = parseInt(cr.split("/")[1], 10);
-      return r.json().then(function(rows){ return { rows: rows, total: total }; });
-    }).then(function(d){
+    fetchAllSignatures(0, [], null).then(function(d){
       if(!d.rows || !d.rows.length) return;
       var n = (d.total !== null && !isNaN(d.total)) ? d.total : d.rows.length;
       renderCount(n);
       d.rows.sort(function(a,b){
         return lastNameKey(a.name).localeCompare(lastNameKey(b.name), undefined, {sensitivity:"base"});
       });
-      var box = document.getElementById("wallnames");
-      box.innerHTML = "";
-      d.rows.forEach(function(row, index){
-        var div = document.createElement("div");
-        div.className = "signer";
-        div.textContent = row.name + " ";
-        var z = document.createElement("span");
-        z.className = "z";
-        z.textContent = row.zip;
-        div.appendChild(z);
-        if(row.message && row.message.trim()){
-          var tip = document.createElement("span");
-          var tipId = "comment-" + index;
-          tip.className = "comment-tooltip";
-          tip.id = tipId;
-          tip.setAttribute("role", "tooltip");
-          tip.textContent = row.message.trim();
-          div.classList.add("has-comment");
-          div.tabIndex = 0;
-          div.setAttribute("aria-describedby", tipId);
-          var marker = document.createElement("span");
-          marker.className = "comment-marker";
-          marker.setAttribute("aria-hidden", "true");
-          div.appendChild(marker);
-          div.appendChild(tip);
+      var groupedRows = { boston:[], somerville:[], cambridge:[], brookline:[], massachusetts:[], elsewhere:[] };
+      d.rows.forEach(function(row){ groupedRows[signerGroup(row.zip)].push(row); });
+      var groups = [
+        { key:"boston", groupId:null, labelId:"boston-label", boxId:"wallnames", label:"Boston signatories" },
+        { key:"somerville", groupId:"somerville-group", labelId:"somerville-label", boxId:"somerville-wallnames", label:"Somerville signatories" },
+        { key:"cambridge", groupId:"cambridge-group", labelId:"cambridge-label", boxId:"cambridge-wallnames", label:"Cambridge signatories" },
+        { key:"brookline", groupId:"brookline-group", labelId:"brookline-label", boxId:"brookline-wallnames", label:"Brookline signatories" },
+        { key:"massachusetts", groupId:"massachusetts-group", labelId:"massachusetts-label", boxId:"massachusetts-wallnames", label:"Elsewhere in Massachusetts" },
+        { key:"elsewhere", groupId:"elsewhere-group", labelId:"elsewhere-label", boxId:"elsewhere-wallnames", label:"Elsewhere" }
+      ];
+      var position = 0;
+      groups.forEach(function(group){
+        var rows = groupedRows[group.key];
+        var box = document.getElementById(group.boxId);
+        box.innerHTML = "";
+        document.getElementById(group.labelId).textContent = group.label + " (" + rows.length.toLocaleString() + ")";
+        if(group.groupId) document.getElementById(group.groupId).hidden = !rows.length;
+        if(rows.length){
+          renderSignerList(box, rows, position);
+          position += rows.length;
         }
-        box.appendChild(div);
       });
       document.getElementById("wallcount").textContent =
         n.toLocaleString() + " of 3,600 — in alphabetical order.";
