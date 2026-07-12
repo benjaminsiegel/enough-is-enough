@@ -236,6 +236,49 @@ a{color:inherit;}
   font-weight:600;
 }
 
+/* ---------- share prompt ---------- */
+.share-prompt{
+  border-top:1px solid var(--hairline);
+  border-bottom:1px solid var(--hairline);
+  background:var(--asphalt);
+  color:#fff;
+  padding:clamp(2.4rem,5vw,3.5rem) 1.25rem;
+}
+.share-prompt-inner{max-width:var(--measure);margin:0 auto;text-align:center;}
+.share-prompt .eyebrow{
+  color:var(--paint);
+  font-size:.76rem;
+  font-weight:600;
+  letter-spacing:.14em;
+  text-transform:uppercase;
+  margin-bottom:.7rem;
+}
+.share-prompt h2{
+  font-family:'Archivo Black',sans-serif;
+  font-size:clamp(1.45rem,4vw,2.1rem);
+  letter-spacing:-.01em;
+  text-transform:uppercase;
+  line-height:1.06;
+}
+.share-prompt p:not(.eyebrow){
+  max-width:52ch;
+  margin:.9rem auto 1.35rem;
+  font-family:'Source Serif 4',serif;
+  font-size:1.05rem;
+  line-height:1.55;
+  color:rgba(255,255,255,.84);
+}
+.share-prompt .sharerow a,.share-prompt .sharerow button{
+  border-color:#fff;
+  background:transparent;
+  color:#fff;
+}
+.share-prompt .sharerow a:hover,.share-prompt .sharerow button:hover{
+  border-color:var(--paint);
+  background:var(--paint);
+  color:var(--ink);
+}
+
 /* ---------- sign form ---------- */
 .sign{
   border-top:1px solid var(--hairline);
@@ -517,6 +560,20 @@ footer a{color:rgba(255,255,255,.9);}
   </div>
 </section>
 
+<section class="share-prompt" aria-label="Share the open letter">
+  <div class="share-prompt-inner">
+    <p class="eyebrow">Before Monday morning</p>
+    <h2>Help bring in three more names.</h2>
+    <p>We deliver this letter to the Mayor&rsquo;s office at 9 a.m. Monday. Send it to the people who should add their names before then.</p>
+    <div class="sharerow">
+      <a id="pre-sh-text">Text</a>
+      <a id="pre-sh-wa" target="_blank" rel="noopener">WhatsApp</a>
+      <a id="pre-sh-em">Email</a>
+      <button type="button" id="pre-copylink">Copy link</button>
+    </div>
+  </div>
+</section>
+
 <section class="sign" id="sign" aria-label="Sign the letter">
   <div class="sign-inner">
     <h2>Add your name</h2>
@@ -645,8 +702,8 @@ footer a{color:rgba(255,255,255,.9);}
   var SUPABASE_KEY = CONFIG.SUPABASE_ANON_KEY || "";
 
   var GOAL = 3600;
-  var SHARE_TEXT = "Boston has been warned for years that delayed street-safety projects would cost lives. Enough is enough. Read and sign the open letter to Mayor Wu:";
-  var url = location.origin && location.origin !== "null" ? location.href.split("#")[0] : "https://EXAMPLE.ORG/";
+  var SHARE_TEXT = "Boston has been warned for years that delayed street-safety projects would cost lives. Enough is enough. Add your name before the letter is delivered to Mayor Wu at 9 a.m. Monday:";
+  var url = location.origin && location.origin !== "null" ? location.href.split("#")[0] : "https://benjaminsiegel.github.io/enough-is-enough/";
 
   function sbHeaders(extra){
     var h = { "apikey": SUPABASE_KEY, "Authorization": "Bearer " + SUPABASE_KEY };
@@ -668,6 +725,16 @@ footer a{color:rgba(255,255,255,.9);}
   });
 
   /* signature wall + live count (Supabase). Falls back to count.json if Supabase isn't configured. */
+  function nextGoalPrompt(n){
+    var target, label;
+    if(n < GOAL * .5){ target = GOAL * .5; label = "halfway"; }
+    else if(n < GOAL * (2 / 3)){ target = GOAL * (2 / 3); label = "two thirds of the way there"; }
+    else if(n < GOAL * .75){ target = GOAL * .75; label = "three quarters of the way there"; }
+    else { target = GOAL; label = "our goal"; }
+    var needed = Math.max(0, Math.ceil(target - n));
+    if(!needed) return "Our goal has been reached.";
+    return needed.toLocaleString() + " more " + (needed === 1 ? "name" : "names") + " to reach " + label + ".";
+  }
   function renderCount(n){
     var milestone = n >= GOAL * .75
       ? "More than three quarters of the way there."
@@ -675,17 +742,17 @@ footer a{color:rgba(255,255,255,.9);}
         ? "More than two thirds of the way there."
         : n >= GOAL * .5
           ? "More than halfway there."
-          : n >= GOAL * (1 / 3)
-            ? "More than a third of the way there."
+        : n >= GOAL * (1 / 3)
+            ? "Almost halfway there."
             : n >= GOAL * .25
               ? "More than a quarter of the way there."
               : "Nearly a quarter of the way there.";
     document.getElementById("sigcount").textContent =
-      n.toLocaleString() + " of 3,600 neighbors have signed \u2014 one hundred names for every year of Louisa\u2019s life.";
+      n.toLocaleString() + " neighbors have signed \u2014 " + nextGoalPrompt(n);
     document.getElementById("goalfill").style.width = Math.min(100, (n / GOAL) * 100) + "%";
     document.getElementById("goalstatus").textContent = milestone;
     document.getElementById("signup-milestone").textContent =
-      milestone.replace("there.", "toward our goal of gathering 3,600 signatures.");
+      nextGoalPrompt(n) + " Add yours before the 9 a.m. Monday delivery.";
   }
   function lastNameKey(name){
     var parts = name.trim().split(/\s+/);
@@ -885,11 +952,16 @@ footer a{color:rgba(255,255,255,.9);}
   document.getElementById("sh-fb").href = "https://www.facebook.com/sharer/sharer.php?u=" + enc(url);
   document.getElementById("sh-x").href = "https://twitter.com/intent/tweet?text=" + enc(SHARE_TEXT) + "&url=" + enc(url);
   document.getElementById("sh-em").href = "mailto:?subject=" + enc("Enough is Enough — sign the open letter to Mayor Wu") + "&body=" + enc(SHARE_TEXT + "\n\n" + url);
-  document.getElementById("copylink").addEventListener("click", function(){
+  document.getElementById("pre-sh-text").href = "sms:?&body=" + enc(SHARE_TEXT + "\n\n" + url);
+  document.getElementById("pre-sh-wa").href = "https://wa.me/?text=" + enc(SHARE_TEXT + "\n\n" + url);
+  document.getElementById("pre-sh-em").href = "mailto:?subject=" + enc("Enough is Enough — sign before Monday morning") + "&body=" + enc(SHARE_TEXT + "\n\n" + url);
+  function copyLink(button){
     navigator.clipboard.writeText(url).then(function(){
-      document.getElementById("copylink").textContent = "Link copied";
+      button.textContent = "Link copied";
     });
-  });
+  }
+  document.getElementById("copylink").addEventListener("click", function(){ copyLink(this); });
+  document.getElementById("pre-copylink").addEventListener("click", function(){ copyLink(this); });
 })();
 </script>
 </body>
