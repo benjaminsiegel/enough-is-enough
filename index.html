@@ -761,9 +761,9 @@ footer a{color:rgba(255,255,255,.9);}
 
 <section class="share-prompt" aria-label="Share the open letter">
   <div class="share-prompt-inner">
-    <p class="eyebrow">Before Monday morning</p>
+    <p class="eyebrow">Before Thursday</p>
     <h2>Help bring in three more names.</h2>
-    <p>We deliver this letter to the Mayor&rsquo;s office at 9 a.m. Monday. Send it to the people who should add their names before then.</p>
+    <p>We will deliver this letter to the Mayor&rsquo;s office on Thursday. Send it to the people who should add their names before then.</p>
     <div class="sharerow">
       <a id="pre-sh-text">Text</a>
       <a id="pre-sh-wa" target="_blank" rel="noopener">WhatsApp</a>
@@ -776,7 +776,7 @@ footer a{color:rgba(255,255,255,.9);}
 <section class="sign" id="sign" aria-label="Sign the letter">
   <div class="sign-inner">
     <h2>Add your name</h2>
-    <p class="why"><strong id="signup-milestone">We are aiming for 3600 signatures in commemoration of Louisa's 36 years before Monday, July 13, at 9 a.m.</strong> Your name and zip code will be delivered to the Mayor's office, the City Council, and the Interim Chief of Streets with the full letter.</p>
+    <p class="why"><strong id="signup-milestone">We are aiming for 3600 signatures in commemoration of Louisa's 36 years before Thursday.</strong> Your name and zip code will be delivered to the Mayor's office, the City Council, and the Interim Chief of Streets with the full letter.</p>
 
     <form id="sigform" name="signatures" method="POST" data-netlify="true" netlify-honeypot="bot-field" novalidate>
       <input type="hidden" name="form-name" value="signatures">
@@ -921,7 +921,7 @@ footer a{color:rgba(255,255,255,.9);}
   var SUPABASE_KEY = CONFIG.SUPABASE_ANON_KEY || "";
 
   var GOAL = 3600;
-  var SHARE_TEXT = "Boston has been warned for years that delayed street-safety projects would cost lives. Enough is enough. Add your name before the letter is delivered to Mayor Wu at 9 a.m. Monday:";
+  var SHARE_TEXT = "Boston has been warned for years that delayed street-safety projects would cost lives. Enough is enough. Add your name before the letter is delivered to Mayor Wu on Thursday:";
   var url = location.origin && location.origin !== "null" ? location.href.split("#")[0] : "https://benjaminsiegel.github.io/enough-is-enough/";
 
   function sbHeaders(extra){
@@ -1275,7 +1275,7 @@ footer a{color:rgba(255,255,255,.9);}
   document.getElementById("sh-em").href = "mailto:?subject=" + enc("Enough is Enough — sign the open letter to Mayor Wu") + "&body=" + enc(SHARE_TEXT + "\n\n" + url);
   document.getElementById("pre-sh-text").href = "sms:?&body=" + enc(SHARE_TEXT + "\n\n" + url);
   document.getElementById("pre-sh-wa").href = "https://wa.me/?text=" + enc(SHARE_TEXT + "\n\n" + url);
-  document.getElementById("pre-sh-em").href = "mailto:?subject=" + enc("Enough is Enough — sign before Monday morning") + "&body=" + enc(SHARE_TEXT + "\n\n" + url);
+  document.getElementById("pre-sh-em").href = "mailto:?subject=" + enc("Enough is Enough — sign before Thursday") + "&body=" + enc(SHARE_TEXT + "\n\n" + url);
   function copyLink(button){
     navigator.clipboard.writeText(url).then(function(){
       button.textContent = "Link copied";
