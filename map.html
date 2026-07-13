@@ -1,0 +1,158 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Forty-nine people — killed on Boston's streets since November 2021</title>
+<link rel="stylesheet" href="https://unpkg.com/leaflet@1.9.4/dist/leaflet.css">
+<link href="https://fonts.googleapis.com/css2?family=Archivo:wght@400;600&family=Archivo+Black&family=Source+Serif+4:opsz,wght@8..60,400;8..60,600&display=swap" rel="stylesheet">
+<style>
+  html,body{margin:0;padding:0;height:100%;background:#1A1B1D;}
+  #map{position:absolute;inset:0;}
+  .maphead{
+    position:absolute;top:0;left:0;right:0;z-index:1000;
+    background:rgba(26,27,29,.92);
+    color:#fff;text-align:center;
+    padding:.85rem 3rem;
+    font-family:'Archivo',sans-serif;
+    pointer-events:none;
+  }
+  .maphead h1{
+    margin:0;font-family:'Archivo Black',sans-serif;
+    font-size:1.05rem;letter-spacing:.02em;text-transform:uppercase;
+  }
+  .maphead p{
+    margin:.15rem 0 0;font-size:.72rem;letter-spacing:.12em;
+    text-transform:uppercase;color:rgba(255,255,255,.55);
+  }
+  .maphead .u{color:#F2B705;}
+  /* popups in the site's register */
+  .leaflet-popup-content-wrapper{
+    background:#FFFFFF;color:#141414;border-radius:0;
+    box-shadow:0 4px 18px rgba(0,0,0,.5);
+  }
+  .leaflet-popup-tip{background:#FFFFFF;}
+  .leaflet-popup-content{margin:14px 16px;font-family:'Archivo',sans-serif;}
+  .pp-name{
+    font-family:'Source Serif 4',serif;font-weight:600;
+    font-size:1.05rem;line-height:1.3;margin:0 0 2px;
+  }
+  .pp-meta{font-size:.8rem;color:#565A5E;margin:0;line-height:1.5;}
+  .pp-rule{width:26px;height:3px;background:#F2B705;margin:7px 0 6px;}
+  .pp-loc{font-size:.8rem;color:#141414;margin:0;line-height:1.45;}
+  .leaflet-container{background:#1A1B1D;font-family:'Archivo',sans-serif;}
+  .leaflet-control-attribution{background:rgba(26,27,29,.7)!important;color:#8A8D91!important;}
+  .leaflet-control-attribution a{color:#B8BBBE!important;}
+</style>
+</head>
+<body>
+<div class="maphead">
+  <h1>Forty-nine people</h1>
+  <p>Killed on Boston&rsquo;s streets &middot; November 2021 &ndash; July 2026 &middot; <span class="u">tap any light for their name</span></p>
+</div>
+<div id="map"></div>
+
+<script src="https://unpkg.com/leaflet@1.9.4/dist/leaflet.js"></script>
+<script>
+/* ============================================================================
+   MEMORIAL DATA — VERIFY EVERY PIN BEFORE LAUNCH.
+   Coordinates are careful estimates of each intersection/address; drag-check
+   each against the crash reporting. Edit lat/lng in place. Two flagged as
+   uncertain are marked with "check": true.
+   ========================================================================== */
+var PEOPLE = [
+ {n:"Ann O'Flaherty",a:"62",d:"2021-12-15",loc:"Washington St & Shepard St",lat:42.3489,lng:-71.1525,check:true},
+ {n:"Richard Mullins",a:"33",d:"2022-04-04",loc:"Kneeland St & Hudson St",lat:42.3506,lng:-71.0607},
+ {n:null,a:"58",d:"2022-05-12",loc:"19 Bennington St",lat:42.3705,lng:-71.0355},
+ {n:null,a:"65",d:"2022-05-28",loc:"Massachusetts Ave & Harrison Ave",lat:42.3352,lng:-71.0783},
+ {n:null,a:"81",d:"2022-05-29",loc:"Cambridge St & Blossom St",lat:42.3620,lng:-71.0680},
+ {n:"Brandon Jennings",a:"22",d:"2022-06-04",loc:"Storrow Dr west of Leverett Circle",lat:42.3690,lng:-71.0700},
+ {n:null,a:null,d:"2022-07-13",loc:"Massachusetts Ave & Huntington Ave",lat:42.3420,lng:-71.0855},
+ {n:null,a:"88",d:"2022-08-02",loc:"Walnut Ave & Seaver St",lat:42.3105,lng:-71.0885},
+ {n:"Thomas Ruffen",a:"39",d:"2022-09-01",loc:"Centre St & Columbus Ave",lat:42.3232,lng:-71.0997},
+ {n:null,a:"91",d:"2022-09-08",loc:"Morton St & Selden St",lat:42.2872,lng:-71.0824},
+ {n:"Christian Yemga",a:"34",d:"2022-10-01",loc:"I-93 South near mile marker 12.4",lat:42.3130,lng:-71.0530},
+ {n:null,a:"57",d:"2022-10-04",loc:"35 Spring St",lat:42.2820,lng:-71.1620},
+ {n:"Mark McAuliffe",a:"49",d:"2022-10-22",loc:"I-93 near Exit 15A",lat:42.3215,lng:-71.0560},
+ {n:null,a:"26",d:"2022-12-11",loc:"I-93 North near Exit 15",lat:42.3235,lng:-71.0555},
+ {n:"Michael E. Simpson",a:"73",d:"2023-01-20",loc:"Massachusetts Ave & Melnea Cass Blvd",lat:42.3327,lng:-71.0768},
+ {n:"Egdio D'Antuony",a:"about 60",d:"2023-03-26",loc:"3968 Washington St",lat:42.2925,lng:-71.1210},
+ {n:"Vishwachand Kolla",a:"47",d:"2023-03-27",loc:"Terminal B lower roadway, Logan Airport",lat:42.3620,lng:-71.0230},
+ {n:"Torrance Hodges",a:"53",d:"2023-04-23",loc:"Gallivan Blvd & Dorchester Ave",lat:42.2795,lng:-71.0570},
+ {n:"Ivan Pierre",a:"4",d:"2023-07-18",loc:"165 Wood Ave",lat:42.2647,lng:-71.1080},
+ {n:null,a:"37",d:"2023-09-08",loc:"430 Stuart St",lat:42.3490,lng:-71.0740},
+ {n:"Angel Maestre",a:"62",d:"2023-11-25",loc:"Blue Hill Ave & American Legion Hwy",lat:42.2830,lng:-71.0925},
+ {n:null,a:null,d:"2023-12-18",loc:"Dexter St & Alford St",lat:42.3877,lng:-71.0755},
+ {n:"Samuel Alvarado",a:"21",d:"2023-12-19",loc:"Cambridge St & Hano St",lat:42.3620,lng:-71.1330},
+ {n:null,a:"35",d:"2024-01-24",loc:"Massachusetts Ave & Albany St",lat:42.3339,lng:-71.0734},
+ {n:"Ernest Partin",a:"38",d:"2024-01-27",loc:"Curtis St & Addison St",lat:42.3820,lng:-71.0280},
+ {n:null,a:"60",d:"2024-02-28",loc:"Melnea Cass Blvd & Hampden St",lat:42.3298,lng:-71.0808},
+ {n:"Gracie Gancheva",a:"4",d:"2024-03-24",loc:"Congress St & Sleeper St",lat:42.3512,lng:-71.0470},
+ {n:"Raphael Desilus",a:"44",d:"2024-08-18",loc:"115 Newmarket Square",lat:42.3280,lng:-71.0660},
+ {n:"Shirley Duggan",a:"89",d:"2024-08-23",loc:"577 East Broadway",lat:42.3352,lng:-71.0388},
+ {n:null,a:"32",d:"2024-09-02",loc:"Massachusetts Ave & Albany St",lat:42.3343,lng:-71.0731},
+ {n:"Jose Anleu",a:"73",d:"2024-10-04",loc:"Washington St & Brahms St",lat:42.2845,lng:-71.1300,check:true},
+ {n:"Glenn Inghram",a:"63",d:"2024-10-12",loc:"Washington St & Tower St",lat:42.2980,lng:-71.1120},
+ {n:null,a:"80",d:"2024-12-12",loc:"55 Bunker Hill St",lat:42.3800,lng:-71.0590},
+ {n:"Mary-Jo Arn",a:"82",d:"2024-12-14",loc:"Washington St & Ashmont St",lat:42.2872,lng:-71.0715},
+ {n:"Diva Helena Pina De Carvalho",a:"39",d:"2024-12-18",loc:"Malcolm X Blvd & Tremont St",lat:42.3310,lng:-71.0900},
+ {n:"Noah Curtis Greany",a:"26",d:"2025-01-12",loc:"Dorchester Ave, Boston St & Southampton St",lat:42.3285,lng:-71.0565},
+ {n:"Taylor Wilkinson",a:"20",d:"2025-01-18",loc:"1829 Washington St",lat:42.3355,lng:-71.0790},
+ {n:"Lens Arthur Joseph",a:"5",d:"2025-04-28",loc:"112 Washington St",lat:42.3005,lng:-71.0745,check:true},
+ {n:null,a:"73",d:"2025-07-12",loc:"Charles St & Dorchester Ave",lat:42.2990,lng:-71.0600},
+ {n:null,a:null,d:"2025-08-07",loc:"Dartmouth St & Huntington Ave",lat:42.3470,lng:-71.0770},
+ {n:null,a:"71",d:"2025-09-25",loc:"Meridian St & Saratoga St",lat:42.3745,lng:-71.0355},
+ {n:null,a:"77",d:"2025-10-05",loc:"101 South Huntington Ave",lat:42.3290,lng:-71.1080},
+ {n:"Alhanouf Alhazzaa",a:"40",d:"2025-10-06",loc:"Albany St & Massachusetts Ave",lat:42.3336,lng:-71.0740},
+ {n:null,a:"56",d:"2025-12-31",loc:"Belden St & Dudley St",lat:42.3200,lng:-71.0680},
+ {n:"John Axelrod",a:"79",d:"2026-01-03",loc:"Commonwealth Ave & Hereford St",lat:42.3505,lng:-71.0850},
+ {n:null,a:null,d:"2026-03-21",loc:"Southampton St & Bradston St",lat:42.3270,lng:-71.0640},
+ {n:null,a:null,d:"2026-04-11",loc:"Massachusetts Ave & Melnea Cass Blvd",lat:42.3331,lng:-71.0774},
+ {n:"Binty Janneh",a:null,d:"2026-06-20",loc:"Blue Hill Ave & Fairway St",lat:42.2775,lng:-71.0935},
+ {n:"Louisa Gag",a:"36",d:"2026-07-09",loc:"Tremont St & Parker St",lat:42.3318,lng:-71.0953,louisa:true}
+];
+
+var MONTHS=["January","February","March","April","May","June","July","August","September","October","November","December"];
+function fmtDate(d){var p=d.split("-");return MONTHS[parseInt(p[1],10)-1]+" "+parseInt(p[2],10)+", "+p[0];}
+
+var map=L.map("map",{zoomControl:true,scrollWheelZoom:true});
+map.zoomControl.setPosition("bottomright");
+L.tileLayer("https://{s}.basemaps.cartocdn.com/dark_all/{z}/{x}/{y}{r}.png",{
+  attribution:'&copy; <a href="https://www.openstreetmap.org/copyright">OpenStreetMap</a> &copy; <a href="https://carto.com/attributions">CARTO</a>',
+  maxZoom:19
+}).addTo(map);
+
+var bounds=[];
+var louisaMarker=null;
+PEOPLE.forEach(function(p){
+  var isL=!!p.louisa;
+  var m=L.circleMarker([p.lat,p.lng],{
+    radius:isL?9:6.5,
+    fillColor:isL?"#F2B705":"#F2F2F0",
+    fillOpacity:isL?0.95:0.85,
+    color:"#1A1B1D",
+    weight:1.5
+  }).addTo(map);
+  var name=p.n||"A neighbor";
+  var meta=(p.a?("Age "+p.a+" &middot; "):"")+fmtDate(p.d);
+  m.bindPopup(
+    '<p class="pp-name">'+name+'</p>'+
+    '<p class="pp-meta">'+meta+'</p>'+
+    '<div class="pp-rule"></div>'+
+    '<p class="pp-loc">'+p.loc+'</p>',
+    {closeButton:true,maxWidth:260}
+  );
+  bounds.push([p.lat,p.lng]);
+  if(isL)louisaMarker=m;
+});
+
+map.fitBounds(bounds,{padding:[60,40]});
+window.focusLouisa=function(){
+  if(!louisaMarker)return;
+  map.invalidateSize({animate:false});
+  map.setView(louisaMarker.getLatLng(),13,{animate:false});
+  louisaMarker.openPopup();
+};
+</script>
+</body>
+</html>
