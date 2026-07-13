@@ -153,7 +153,8 @@ a{color:inherit;}
   cursor:pointer;
 }
 .notes-trigger:hover{background:var(--ink);border-color:var(--ink);color:#fff;}
-.notes-trigger:focus-visible,.notes-close:focus-visible{outline:3px solid var(--paint);outline-offset:3px;}
+.map-trigger{text-decoration:none;}
+.notes-trigger:focus-visible,.map-trigger:focus-visible,.notes-close:focus-visible{outline:3px solid var(--paint);outline-offset:3px;}
 .hero .count{
   display:table;
   margin:1.4rem auto 0;
@@ -308,11 +309,52 @@ body.notes-open{overflow:hidden;}
   text-transform:uppercase;
 }
 .mayor-note .note-zip{margin-left:.65rem;font-weight:400;}
+
+/* ---------- memorial map ---------- */
+body.map-open{overflow:hidden;}
+.map-overlay{
+  position:fixed;
+  z-index:101;
+  inset:0;
+  display:grid;
+  place-items:center;
+  padding:clamp(1rem,4vw,3rem);
+  background:rgba(15,16,17,.78);
+}
+.map-overlay[hidden]{display:none;}
+.map-dialog{
+  position:relative;
+  width:min(100%,1120px);
+  height:min(88vh,760px);
+  overflow:hidden;
+  border:1px solid rgba(255,255,255,.38);
+  background:#1a1b1d;
+  box-shadow:0 24px 80px rgba(0,0,0,.42);
+}
+.map-frame{display:block;width:100%;height:100%;border:0;}
+.map-close{
+  position:absolute;
+  z-index:2;
+  top:.85rem;
+  right:.85rem;
+  width:2.2rem;
+  height:2.2rem;
+  border:1px solid rgba(255,255,255,.42);
+  border-radius:50%;
+  background:rgba(26,27,29,.88);
+  color:#fff;
+  font-size:1.45rem;
+  line-height:1;
+  cursor:pointer;
+}
+.map-close:focus-visible{outline:3px solid var(--paint);outline-offset:3px;}
 @media (max-width:560px){
   .hero-actions{flex-direction:column;align-items:stretch;max-width:21rem;margin-left:auto;margin-right:auto;}
-  .hero-actions .cta,.notes-trigger{text-align:center;}
+  .hero-actions .cta,.notes-trigger,.map-trigger{text-align:center;}
   .notes-overlay{padding:0;}
   .notes-dialog{width:100%;height:100%;max-height:none;}
+  .map-overlay{padding:0;}
+  .map-dialog{width:100%;height:100%;}
 }
 
 /* ---------- letter ---------- */
@@ -683,6 +725,7 @@ footer a{color:rgba(255,255,255,.9);}
   <div class="hero-actions">
     <a class="cta" href="#letter">Read and sign the letter</a>
     <button class="notes-trigger" id="notes-trigger" type="button" hidden>Read notes to the Mayor</button>
+    <button class="notes-trigger map-trigger" id="map-trigger" type="button">See the map of 49 people killed by drivers since 2021</button>
   </div>
   <p class="count" id="sigcount">Neighbors have signed.</p>
   <div class="goalbar" aria-hidden="true"><div class="goalfill" id="goalfill"></div></div>
@@ -700,7 +743,7 @@ footer a{color:rgba(255,255,255,.9);}
     <p class="lede">Enough is enough.</p>
     <p>We are parents, families, and neighbors from across Boston. Many of us have met you — at safety walks, at community meetings, on <a href="https://www.universalhub.com/2026/mayor-outlines-ideas-making-hyde-park-avenue-safer-near-forest-hills-t" target="_blank" rel="noopener">Hyde Park Avenue</a> and on corridors like it across the city. For years, we have told you, in public and to your face, that continued delay on street safety would cost lives.</p>
     <p>Last week it cost the life of <a href="https://www.bostonglobe.com/2026/07/09/metro/pedestrian-struck-killed-in-roxbury-crossing/" target="_blank" rel="noopener">Louisa Gag</a> — a transportation planner in your own administration, a person who devoted her career to making our streets safe. Louisa was killed on her bicycle blocks from an intersection your administration has <a href="https://mass.streetsblog.org/2026/07/09/driver-kills-bicyclist-on-tremont-street-in-mission-hill" target="_blank" rel="noopener">studied and stalled</a>. She was not the first. We have been losing neighbors to these streets for years, and we have been warning you, specifically and repeatedly, that more deaths were coming.</p>
-    <p>You know as well as anyone how beloved Louisa was. She began her career in public service on your own staff, when you were a city councilor, and she spent it working tirelessly for the residents of Boston — beside the advocates she organized, her colleagues in City Hall, and neighbors across this city whose streets are safer because of her. She was killed on the streets she spent her career trying to fix. Years ago, one of her professional responsibilities was keeping the list of people killed by cars in Boston. Now her name has been added to it.</p>
+    <p>You know as well as anyone how beloved Louisa was. She began her career in public service on your own staff, when you were a city councilor, and she spent it working tirelessly for the residents of Boston — beside the advocates she organized, her colleagues in City Hall, and neighbors across this city whose streets are safer because of her. She was killed on the streets she spent her career trying to fix. Years ago, one of her professional responsibilities was keeping the list of <a href="./map.html" data-map-trigger>people killed by cars in Boston</a>. Now her name has been added to it.</p>
     <p>For at least eighteen months, your administration has <a href="https://www.bostonglobe.com/2026/03/15/metro/boston-mayor-michelle-wu-streets-cabinet-project-pause/" target="_blank" rel="noopener">stalled and re-studied</a> safety projects that were <a href="https://www.bostonglobe.com/2026/03/09/opinion/wu-bike-lanes-street-safety/" target="_blank" rel="noopener">designed and funded</a>. You have told us these projects need more process, more consensus, more perfection. But consensus never arrives for the dead, and a study protects no one.</p>
     <p>Budgets are moral documents. The budget you put forward placed safety projects on hold and <a href="https://mass.streetsblog.org/2026/04/22/mayor-wus-latest-budget-plan-eliminates-funding-for-over-a-dozen-street-safety-projects-see-the-list" target="_blank" rel="noopener">cut transportation funding</a> at the very moment the city needed the opposite.</p>
     <p>We are not asking for better messaging or communication strategies. We are asking you to act:</p>
@@ -862,6 +905,13 @@ footer a{color:rgba(255,255,255,.9);}
   </section>
 </div>
 
+<div class="map-overlay" id="map-overlay" hidden>
+  <section class="map-dialog" id="map-dialog" role="dialog" aria-modal="true" aria-label="Map of people killed by cars in Boston" tabindex="-1">
+    <button class="map-close" id="map-close" type="button" aria-label="Close map">&times;</button>
+    <iframe class="map-frame" data-src="./map.html" title="Map of people killed by cars in Boston"></iframe>
+  </section>
+</div>
+
 <script src="config.js"></script>
 <script>
 (function(){
@@ -923,12 +973,52 @@ footer a{color:rgba(255,255,255,.9);}
   var notesRenderKey = "";
   var notesPreviousFocus = null;
   var notesRows = [];
+  var mapTrigger = document.getElementById("map-trigger");
+  var mapLinks = document.querySelectorAll("[data-map-trigger]");
+  var mapOverlay = document.getElementById("map-overlay");
+  var mapDialog = document.getElementById("map-dialog");
+  var mapClose = document.getElementById("map-close");
+  var mapFrame = document.querySelector(".map-frame");
+  var mapPreviousFocus = null;
+
+  function resetMapOverlay(){
+    mapOverlay.hidden = true;
+    document.body.classList.remove("map-open");
+  }
+  resetMapOverlay();
+  window.addEventListener("pageshow", resetMapOverlay);
 
   function closeNotes(){
     if(notesOverlay.hidden) return;
     notesOverlay.hidden = true;
     document.body.classList.remove("notes-open");
     if(notesPreviousFocus) notesPreviousFocus.focus();
+  }
+  function openMap(trigger){
+    mapPreviousFocus = trigger || document.activeElement;
+    mapOverlay.hidden = false;
+    document.body.classList.add("map-open");
+    mapDialog.focus();
+    if(!mapFrame.getAttribute("src")){
+      mapFrame.setAttribute("src", mapFrame.getAttribute("data-src"));
+    }else{
+      focusMapOnLouisa();
+    }
+  }
+  function focusMapOnLouisa(){
+    window.requestAnimationFrame(function(){
+      try{
+        if(mapFrame.contentWindow && typeof mapFrame.contentWindow.focusLouisa === "function"){
+          mapFrame.contentWindow.focusLouisa();
+        }
+      }catch(e){}
+    });
+  }
+  function closeMap(){
+    if(mapOverlay.hidden) return;
+    mapOverlay.hidden = true;
+    document.body.classList.remove("map-open");
+    if(mapPreviousFocus) mapPreviousFocus.focus();
   }
   function renderNotes(rows){
     var key = notesSort.value + "\u0003" + rows.map(function(row){ return row.name + "\u0001" + row.zip + "\u0001" + row.message + "\u0001" + row.created_at; }).join("\u0002");
@@ -972,7 +1062,12 @@ footer a{color:rgba(255,255,255,.9);}
   });
   notesClose.addEventListener("click", closeNotes);
   notesOverlay.addEventListener("click", function(e){ if(e.target === notesOverlay) closeNotes(); });
-  document.addEventListener("keydown", function(e){ if(e.key === "Escape") closeNotes(); });
+  mapTrigger.addEventListener("click", function(){ openMap(mapTrigger); });
+  mapLinks.forEach(function(link){ link.addEventListener("click", function(e){ e.preventDefault(); openMap(link); }); });
+  mapFrame.addEventListener("load", function(){ if(!mapOverlay.hidden) focusMapOnLouisa(); });
+  mapClose.addEventListener("click", closeMap);
+  mapOverlay.addEventListener("click", function(e){ if(e.target === mapOverlay) closeMap(); });
+  document.addEventListener("keydown", function(e){ if(e.key === "Escape"){ closeNotes(); closeMap(); } });
   notesSort.addEventListener("change", function(){ updateNotesSummary(notesRows.length); renderNotes(sortedNotes(notesRows)); });
   var BOSTON_ZIPS = {
     "02108":true,"02109":true,"02110":true,"02111":true,"02112":true,"02113":true,"02114":true,"02115":true,"02116":true,"02117":true,
