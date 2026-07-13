@@ -766,7 +766,7 @@ footer a{color:rgba(255,255,255,.9);}
 </head>
 <body>
 
-<div class="topband">An open letter to Mayor Michelle Wu &nbsp;·&nbsp; Boston &nbsp;·&nbsp; July 2026</div>
+<div class="topband"><button class="vigil-link vigil-trigger" type="button" aria-haspopup="dialog" aria-controls="vigil-overlay">Thursday, July 16 &nbsp;·&nbsp; Vigil for Louisa Gag &nbsp;·&nbsp; City Hall Plaza &nbsp;·&nbsp; Gather 5:30 p.m., program 6 p.m.</button></div>
 
 <header class="hero">
   <video class="hero-video" autoplay muted loop playsinline preload="metadata" aria-hidden="true">
@@ -816,7 +816,7 @@ footer a{color:rgba(255,255,255,.9);}
   <div class="share-prompt-inner">
     <p class="eyebrow">Before Thursday</p>
     <h2>Help bring in three more names.</h2>
-    <p>We will deliver this letter to the Mayor&rsquo;s office in advance of <button class="vigil-link" id="vigil-trigger" type="button" aria-haspopup="dialog" aria-controls="vigil-overlay">Thursday&rsquo;s vigil in honor of Louisa</button> &mdash; City Hall Plaza; gather at 5:30 p.m., program at 6 p.m.</p>
+    <p>We will deliver this letter to the Mayor&rsquo;s office in advance of <button class="vigil-link vigil-trigger" type="button" aria-haspopup="dialog" aria-controls="vigil-overlay">Thursday&rsquo;s vigil in honor of Louisa</button> &mdash; City Hall Plaza; gather at 5:30 p.m., program at 6 p.m.</p>
     <div class="sharerow">
       <a id="pre-sh-text">Text</a>
       <a id="pre-sh-wa" target="_blank" rel="noopener">WhatsApp</a>
@@ -1040,7 +1040,7 @@ footer a{color:rgba(255,255,255,.9);}
   var mapClose = document.getElementById("map-close");
   var mapFrame = document.querySelector(".map-frame");
   var mapPreviousFocus = null;
-  var vigilTrigger = document.getElementById("vigil-trigger");
+  var vigilTriggers = document.querySelectorAll(".vigil-trigger");
   var vigilOverlay = document.getElementById("vigil-overlay");
   var vigilDialog = document.getElementById("vigil-dialog");
   var vigilClose = document.getElementById("vigil-close");
@@ -1092,8 +1092,8 @@ footer a{color:rgba(255,255,255,.9);}
     document.body.classList.remove("map-open");
     if(mapPreviousFocus) mapPreviousFocus.focus();
   }
-  function openVigil(){
-    vigilPreviousFocus = document.activeElement;
+  function openVigil(trigger){
+    vigilPreviousFocus = trigger || document.activeElement;
     vigilOverlay.hidden = false;
     document.body.classList.add("vigil-open");
     vigilDialog.focus();
@@ -1151,7 +1151,7 @@ footer a{color:rgba(255,255,255,.9);}
   mapFrame.addEventListener("load", function(){ if(!mapOverlay.hidden) focusMapOnLouisa(); });
   mapClose.addEventListener("click", closeMap);
   mapOverlay.addEventListener("click", function(e){ if(e.target === mapOverlay) closeMap(); });
-  vigilTrigger.addEventListener("click", openVigil);
+  vigilTriggers.forEach(function(trigger){ trigger.addEventListener("click", function(){ openVigil(trigger); }); });
   vigilClose.addEventListener("click", closeVigil);
   vigilOverlay.addEventListener("click", function(e){ if(e.target === vigilOverlay) closeVigil(); });
   document.addEventListener("keydown", function(e){ if(e.key === "Escape"){ closeNotes(); closeMap(); closeVigil(); } });
