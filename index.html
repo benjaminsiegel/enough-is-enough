@@ -348,6 +348,58 @@ body.map-open{overflow:hidden;}
   cursor:pointer;
 }
 .map-close:focus-visible{outline:3px solid var(--paint);outline-offset:3px;}
+
+/* ---------- vigil flyer ---------- */
+body.vigil-open{overflow:hidden;}
+.vigil-link{
+  display:inline;
+  margin:0;
+  padding:0;
+  border:0;
+  border-bottom:1px solid var(--paint);
+  background:transparent;
+  color:#fff;
+  font:inherit;
+  cursor:pointer;
+}
+.vigil-link:hover{color:var(--paint);}
+.vigil-link:focus-visible{outline:3px solid var(--paint);outline-offset:3px;}
+.vigil-overlay{
+  position:fixed;
+  z-index:102;
+  inset:0;
+  display:grid;
+  place-items:center;
+  padding:clamp(1rem,4vw,3rem);
+  background:rgba(15,16,17,.8);
+}
+.vigil-overlay[hidden]{display:none;}
+.vigil-dialog{
+  position:relative;
+  width:min(100%,650px);
+  max-height:92vh;
+  padding:.6rem;
+  border:1px solid rgba(255,255,255,.38);
+  background:#fff;
+  box-shadow:0 24px 80px rgba(0,0,0,.42);
+}
+.vigil-flyer{display:block;width:100%;max-height:calc(92vh - 1.2rem);object-fit:contain;}
+.vigil-close{
+  position:absolute;
+  z-index:2;
+  top:1rem;
+  right:1rem;
+  width:2.2rem;
+  height:2.2rem;
+  border:1px solid rgba(255,255,255,.72);
+  border-radius:50%;
+  background:rgba(20,20,20,.8);
+  color:#fff;
+  font-size:1.45rem;
+  line-height:1;
+  cursor:pointer;
+}
+.vigil-close:focus-visible{outline:3px solid var(--paint);outline-offset:3px;}
 @media (max-width:560px){
   .hero-actions{flex-direction:column;align-items:stretch;max-width:21rem;margin-left:auto;margin-right:auto;}
   .hero-actions .cta,.notes-trigger,.map-trigger{text-align:center;}
@@ -355,6 +407,7 @@ body.map-open{overflow:hidden;}
   .notes-dialog{width:100%;height:100%;max-height:none;}
   .map-overlay{padding:0;}
   .map-dialog{width:100%;height:100%;}
+  .vigil-overlay{padding:.7rem;}
 }
 
 /* ---------- letter ---------- */
@@ -763,7 +816,7 @@ footer a{color:rgba(255,255,255,.9);}
   <div class="share-prompt-inner">
     <p class="eyebrow">Before Thursday</p>
     <h2>Help bring in three more names.</h2>
-    <p>We will deliver this letter to the Mayor&rsquo;s office on Thursday. Send it to the people who should add their names before then.</p>
+    <p>We will deliver this letter to the Mayor&rsquo;s office in advance of <button class="vigil-link" id="vigil-trigger" type="button" aria-haspopup="dialog" aria-controls="vigil-overlay">Thursday&rsquo;s vigil in honor of Louisa</button> &mdash; City Hall Plaza; gather at 5:30 p.m., program at 6 p.m.</p>
     <div class="sharerow">
       <a id="pre-sh-text">Text</a>
       <a id="pre-sh-wa" target="_blank" rel="noopener">WhatsApp</a>
@@ -912,6 +965,13 @@ footer a{color:rgba(255,255,255,.9);}
   </section>
 </div>
 
+<div class="vigil-overlay" id="vigil-overlay" hidden>
+  <section class="vigil-dialog" id="vigil-dialog" role="dialog" aria-modal="true" aria-label="Vigil honoring Louisa Gag" tabindex="-1">
+    <button class="vigil-close" id="vigil-close" type="button" aria-label="Close vigil flyer">&times;</button>
+    <img class="vigil-flyer" src="./vigil-flyer.png" alt="Massachusetts Vision Zero Coalition vigil honoring Louisa Gag: Thursday, July 16; gather at 5:30 p.m., speaking program at 6 p.m.; City Hall Plaza, 1 City Hall Square, Boston.">
+  </section>
+</div>
+
 <script src="config.js"></script>
 <script>
 (function(){
@@ -980,6 +1040,11 @@ footer a{color:rgba(255,255,255,.9);}
   var mapClose = document.getElementById("map-close");
   var mapFrame = document.querySelector(".map-frame");
   var mapPreviousFocus = null;
+  var vigilTrigger = document.getElementById("vigil-trigger");
+  var vigilOverlay = document.getElementById("vigil-overlay");
+  var vigilDialog = document.getElementById("vigil-dialog");
+  var vigilClose = document.getElementById("vigil-close");
+  var vigilPreviousFocus = null;
 
   function resetMapOverlay(){
     mapOverlay.hidden = true;
@@ -987,6 +1052,13 @@ footer a{color:rgba(255,255,255,.9);}
   }
   resetMapOverlay();
   window.addEventListener("pageshow", resetMapOverlay);
+
+  function resetVigilOverlay(){
+    vigilOverlay.hidden = true;
+    document.body.classList.remove("vigil-open");
+  }
+  resetVigilOverlay();
+  window.addEventListener("pageshow", resetVigilOverlay);
 
   function closeNotes(){
     if(notesOverlay.hidden) return;
@@ -1019,6 +1091,18 @@ footer a{color:rgba(255,255,255,.9);}
     mapOverlay.hidden = true;
     document.body.classList.remove("map-open");
     if(mapPreviousFocus) mapPreviousFocus.focus();
+  }
+  function openVigil(){
+    vigilPreviousFocus = document.activeElement;
+    vigilOverlay.hidden = false;
+    document.body.classList.add("vigil-open");
+    vigilDialog.focus();
+  }
+  function closeVigil(){
+    if(vigilOverlay.hidden) return;
+    vigilOverlay.hidden = true;
+    document.body.classList.remove("vigil-open");
+    if(vigilPreviousFocus) vigilPreviousFocus.focus();
   }
   function renderNotes(rows){
     var key = notesSort.value + "\u0003" + rows.map(function(row){ return row.name + "\u0001" + row.zip + "\u0001" + row.message + "\u0001" + row.created_at; }).join("\u0002");
@@ -1067,7 +1151,10 @@ footer a{color:rgba(255,255,255,.9);}
   mapFrame.addEventListener("load", function(){ if(!mapOverlay.hidden) focusMapOnLouisa(); });
   mapClose.addEventListener("click", closeMap);
   mapOverlay.addEventListener("click", function(e){ if(e.target === mapOverlay) closeMap(); });
-  document.addEventListener("keydown", function(e){ if(e.key === "Escape"){ closeNotes(); closeMap(); } });
+  vigilTrigger.addEventListener("click", openVigil);
+  vigilClose.addEventListener("click", closeVigil);
+  vigilOverlay.addEventListener("click", function(e){ if(e.target === vigilOverlay) closeVigil(); });
+  document.addEventListener("keydown", function(e){ if(e.key === "Escape"){ closeNotes(); closeMap(); closeVigil(); } });
   notesSort.addEventListener("change", function(){ updateNotesSummary(notesRows.length); renderNotes(sortedNotes(notesRows)); });
   var BOSTON_ZIPS = {
     "02108":true,"02109":true,"02110":true,"02111":true,"02112":true,"02113":true,"02114":true,"02115":true,"02116":true,"02117":true,
