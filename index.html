@@ -178,6 +178,28 @@ a{color:inherit;}
   background:var(--paint);
   transition:width .8s ease;
 }
+.hero-press{
+  max-width:62ch;
+  margin:1rem auto 0;
+  color:var(--ink);
+  font-size:.78rem;
+  line-height:1.45;
+  letter-spacing:.015em;
+}
+.hero-press .press-label{
+  margin-right:.35rem;
+  font-size:.68rem;
+  font-weight:600;
+  letter-spacing:.12em;
+  text-transform:uppercase;
+}
+.hero-press a{
+  color:inherit;
+  font-weight:600;
+  text-decoration:none;
+  border-bottom:1px solid var(--paint);
+}
+.hero-press a:hover{border-bottom-color:var(--ink);}
 .milestone{
   margin-top:.75rem;
   font-size:.78rem;
@@ -782,6 +804,7 @@ footer a{color:rgba(255,255,255,.9);}
   </div>
   <p class="count" id="sigcount">Neighbors have signed.</p>
   <div class="goalbar" aria-hidden="true"><div class="goalfill" id="goalfill"></div></div>
+  <p class="hero-press"><span class="press-label">In the news</span><a href="https://www.bostonherald.com/2026/07/14/editorial-the-time-for-safe-streets-in-boston-is-now/" target="_blank" rel="noopener">Boston Herald editorial: “The time for safe streets in Boston is now.” <span aria-hidden="true">↗</span></a></p>
 </header>
 
 <main>
