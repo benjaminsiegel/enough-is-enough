@@ -4,7 +4,7 @@
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 <title>Enough is Enough — An open letter to Mayor Wu</title>
-<meta name="description" content="We are parents, families, and neighbors from across Boston. For years we have warned that continued delay on street safety would cost lives. Read and sign the open letter to Mayor Wu.">
+<meta name="description" content="An open letter to Mayor Wu calling for safer Boston streets, signed by 4,000 people.">
 
 <!-- Open Graph / social cards -->
 <meta property="og:title" content="ENOUGH IS ENOUGH — An open letter to Mayor Wu on street safety">
@@ -549,98 +549,7 @@ body.vigil-open{overflow:hidden;}
   color:var(--ink);
 }
 
-/* ---------- sign form ---------- */
-.sign{
-  border-top:1px solid var(--hairline);
-  padding:clamp(3rem,7vw,5rem) 1.25rem;
-  background:#FAFAFA;
-}
-.sign-inner{max-width:var(--measure);margin:0 auto;}
-.sign h2, .wall h2{
-  font-family:'Archivo Black',sans-serif;
-  text-transform:uppercase;
-  font-size:clamp(1.6rem,5vw,2.4rem);
-  letter-spacing:-.01em;
-  margin-bottom:.6rem;
-}
-.sign .why{
-  font-family:'Source Serif 4',serif;
-  font-size:1.05rem;
-  line-height:1.6;
-  color:var(--ink);
-  margin-bottom:2.2rem;
-  max-width:55ch;
-}
-.field{margin-bottom:1.4rem;}
-label{
-  display:block;
-  font-size:.85rem;
-  font-weight:600;
-  letter-spacing:.05em;
-  text-transform:uppercase;
-  margin-bottom:.45rem;
-}
-label .opt{font-weight:400;color:var(--concrete);text-transform:none;letter-spacing:0;}
-input[type=text],input[type=email],textarea{
-  width:100%;
-  font-family:'Archivo',sans-serif;
-  font-size:1.05rem;
-  padding:.85rem .9rem;
-  border:1.5px solid var(--ink);
-  border-radius:0;
-  background:#fff;
-  color:var(--ink);
-}
-textarea{resize:vertical;min-height:5.5rem;line-height:1.5;}
-.checks{display:flex;flex-wrap:wrap;gap:.6rem .9rem;}
-.chip{
-  display:inline-flex;align-items:center;gap:.45rem;
-  border:1.5px solid var(--ink);
-  padding:.55rem .85rem;
-  font-size:.95rem;
-  background:#fff;
-  cursor:pointer;
-}
-#zip{max-width:9ch;}
-.chip input{accent-color:var(--ink);width:1.05rem;height:1.05rem;}
-.chip:has(input:checked){background:var(--ink);color:#fff;}
-.charnote{font-size:.8rem;color:var(--concrete);margin-top:.35rem;}
-.consent{
-  display:flex;gap:.7rem;align-items:flex-start;
-  font-size:.95rem;line-height:1.5;
-  margin-bottom:1rem;
-  cursor:pointer;
-  text-transform:none;letter-spacing:0;font-weight:400;
-}
-.consent input{margin-top:.2rem;width:1.15rem;height:1.15rem;accent-color:var(--ink);flex-shrink:0;}
-.submit{
-  display:block;width:100%;
-  background:var(--ink);color:#fff;
-  border:none;border-radius:0;
-  font-family:'Archivo',sans-serif;
-  font-weight:600;font-size:1.15rem;letter-spacing:.02em;
-  padding:1.15rem;
-  margin-top:1.8rem;
-  cursor:pointer;
-}
-.submit:hover{background:#000;}
-.fineprint{
-  font-size:.8rem;color:var(--concrete);line-height:1.55;
-  margin-top:1.1rem;
-}
-.hp{position:absolute;left:-9999px;height:0;overflow:hidden;}
-.confirm{
-  display:none;
-  border:1.5px solid var(--ink);
-  background:#fff;
-  padding:2.2rem 1.6rem;
-  text-align:center;
-}
-.confirm h3{
-  font-family:'Archivo Black',sans-serif;
-  text-transform:uppercase;font-size:1.4rem;margin-bottom:.7rem;
-}
-.confirm p{font-family:'Source Serif 4',serif;font-size:1.05rem;line-height:1.6;margin-bottom:1.4rem;}
+/* ---------- share buttons ---------- */
 .sharerow{display:flex;flex-wrap:wrap;gap:.6rem;justify-content:center;}
 .sharerow a,.sharerow button{
   font-family:'Archivo',sans-serif;font-size:.9rem;font-weight:600;
@@ -648,9 +557,15 @@ textarea{resize:vertical;min-height:5.5rem;line-height:1.5;}
   padding:.6rem 1rem;text-decoration:none;cursor:pointer;border-radius:0;
 }
 .sharerow a:hover,.sharerow button:hover{background:var(--ink);color:#fff;}
-.err{display:none;color:#A31D1D;font-size:.9rem;margin-top:.8rem;font-weight:600;}
 
 /* ---------- signature wall ---------- */
+.wall h2{
+  font-family:'Archivo Black',sans-serif;
+  text-transform:uppercase;
+  font-size:clamp(1.6rem,5vw,2.4rem);
+  letter-spacing:-.01em;
+  margin-bottom:.6rem;
+}
 .wall{
   display:none;
   border-top:1px solid var(--hairline);
@@ -757,6 +672,7 @@ textarea{resize:vertical;min-height:5.5rem;line-height:1.5;}
 }
 .memorial .names span{white-space:nowrap;}
 .memorial .names span:not(:last-child)::after{content:"  ·  ";color:rgba(255,255,255,.35);}
+@media (max-width:560px){.memorial .names span{white-space:normal;}}
 
 /* ---------- footer ---------- */
 footer{
@@ -769,21 +685,6 @@ footer{
 }
 footer a{color:rgba(255,255,255,.9);}
 
-/* ---------- sticky CTA ---------- */
-.stickycta{
-  position:fixed;left:0;right:0;bottom:0;z-index:50;
-  background:var(--ink);
-  padding:.7rem 1rem calc(.7rem + env(safe-area-inset-bottom));
-  text-align:center;
-  transform:translateY(110%);
-  transition:transform .25s ease;
-}
-.stickycta.show{transform:none;}
-.stickycta a{
-  display:block;color:#fff;text-decoration:none;
-  font-weight:600;font-size:1.05rem;letter-spacing:.02em;
-}
-.stickycta a span{color:var(--paint);}
 </style>
 </head>
 <body class="petition-closed">
@@ -803,7 +704,6 @@ footer a{color:rgba(255,255,255,.9);}
     <button class="notes-trigger map-trigger" id="map-trigger" type="button">See the map of 49 people killed by drivers since 2021</button>
   </div>
   <p class="count" id="sigcount">Letter closed July 16, 2026, at 8 a.m. with 4,000 neighbors&rsquo; signatures.</p>
-  <div class="goalbar" id="goalbar" aria-hidden="true" hidden><div class="goalfill" id="goalfill"></div></div>
   <p class="hero-press"><span class="press-label">In the news</span><a href="https://www.bostonglobe.com/2026/07/15/opinion/bicyclist-deaths-boston-bike-lanes/" target="_blank" rel="noopener">Boston Globe: “The preventable blind spot trap killing Boston’s cyclists” <span aria-hidden="true">↗</span></a> &nbsp;·&nbsp; <a href="https://www.bostonglobe.com/2026/07/15/metro/louisa-gag-cyclist-truck-death/" target="_blank" rel="noopener">Boston Globe: Wu and City Hall remain reticent on key crash details <span aria-hidden="true">↗</span></a> &nbsp;·&nbsp; <a href="https://www.bostonherald.com/2026/07/15/boston-mayor-michelle-wu-slammed-for-stalled-streets-projects-after-city-transportation-planners-death/" target="_blank" rel="noopener">Boston Herald: Wu slammed for stalled street projects <span aria-hidden="true">↗</span></a> &nbsp;·&nbsp; <a href="https://www.bostonherald.com/2026/07/14/editorial-the-time-for-safe-streets-in-boston-is-now/" target="_blank" rel="noopener">Boston Herald editorial: “The time for safe streets in Boston is now.” <span aria-hidden="true">↗</span></a> &nbsp;·&nbsp; <a href="https://www.bostonglobe.com/2026/07/14/opinion/letters-city-bike-advocate-killed-safety-policy/" target="_blank" rel="noopener">Boston Globe letters on street safety <span aria-hidden="true">↗</span></a> &nbsp;·&nbsp; <a href="https://mass.streetsblog.org/2026/07/14/wu-administration-shelved-safety-plans-for-mission-hill-streets-where-driver-killed-louisa-gag" target="_blank" rel="noopener">Streetsblog: Wu administration shelved Mission Hill safety plans <span aria-hidden="true">↗</span></a></p>
 </header>
 
@@ -837,9 +737,7 @@ footer a{color:rgba(255,255,255,.9);}
 
 <section class="share-prompt" aria-label="Share the open letter">
   <div class="share-prompt-inner">
-    <p class="eyebrow" id="share-eyebrow" hidden>Before Thursday</p>
     <h2 id="share-title">4000 people have demanded safer streets in Boston.</h2>
-    <p id="share-copy-open" hidden>We will deliver this letter to the Mayor&rsquo;s office in advance of <button class="vigil-link vigil-trigger" type="button" aria-haspopup="dialog" aria-controls="vigil-overlay">Thursday&rsquo;s vigil in honor of Louisa</button> &mdash; City Hall Plaza; gather at 5:30 p.m., program at 6 p.m.</p>
     <p id="share-copy-closed">Having surpassed our goal of 3600 signatures, 100 for every year of Louisa&rsquo;s life, we are delivering this letter to the Mayor&rsquo;s office in advance of <button class="vigil-link vigil-trigger" type="button" aria-haspopup="dialog" aria-controls="vigil-overlay">Thursday&rsquo;s vigil in honor of Louisa</button> &mdash; City Hall Plaza; gather at 5:30 p.m., program at 6 p.m.</p>
     <div class="sharerow">
       <a id="pre-sh-text">Text</a>
@@ -850,74 +748,6 @@ footer a{color:rgba(255,255,255,.9);}
   </div>
 </section>
 
-<section class="sign" id="sign" aria-label="Sign the letter" aria-hidden="true" hidden>
-  <div class="sign-inner">
-    <h2>Add your name</h2>
-    <p class="why"><strong id="signup-milestone">We are aiming for 3600 signatures in commemoration of Louisa's 36 years before Thursday.</strong> Your name and zip code will be delivered to the Mayor's office, the City Council, and the Interim Chief of Streets with the full letter.</p>
-
-    <form id="sigform" name="signatures" method="POST" data-netlify="true" netlify-honeypot="bot-field" novalidate>
-      <input type="hidden" name="form-name" value="signatures">
-      <p class="hp"><label>Don't fill this out: <input name="bot-field" id="botfield"></label></p>
-
-      <div class="field">
-        <label for="fullname">Full name</label>
-        <input type="text" id="fullname" name="fullname" autocomplete="name" required>
-      </div>
-
-      <div class="field">
-        <label for="zip">Zip code</label>
-        <input type="text" id="zip" name="zip" inputmode="numeric" pattern="[0-9]{5}" maxlength="5" autocomplete="postal-code" required>
-      </div>
-
-      <div class="field">
-        <label for="email">Email</label>
-        <input type="email" id="email" name="email" autocomplete="email" required>
-      </div>
-
-      <div class="field">
-        <label>I am signing as a… <span class="opt">(optional — check any)</span></label>
-        <div class="checks">
-          <label class="chip"><input type="checkbox" name="role" value="Parent / Caregiver">Parent / Caregiver</label>
-          <label class="chip"><input type="checkbox" name="role" value="Cyclist">Cyclist</label>
-          <label class="chip"><input type="checkbox" name="role" value="Pedestrian">Pedestrian</label>
-          <label class="chip"><input type="checkbox" name="role" value="City worker">City worker</label>
-          <label class="chip"><input type="checkbox" name="role" value="Resident / Commuter">Resident / Commuter</label>
-        </div>
-      </div>
-
-      <div class="field">
-        <label for="message">If you'd like, add a message to the Mayor <span class="opt">(optional)</span></label>
-        <textarea id="message" name="message" maxlength="400" rows="4"></textarea>
-        <div class="charnote"><span id="charcount">400</span> characters remaining</div>
-      </div>
-
-      <label class="consent">
-        <input type="checkbox" id="consent-public" name="consent_public" value="yes" required>
-        <span>Display my name, zip code, and message publicly as a signatory. <strong>(required)</strong></span>
-      </label>
-      <label class="consent">
-        <input type="checkbox" name="consent_contact" id="consent-contact" value="yes">
-        <span>Contact me about next steps.</span>
-      </label>
-
-      <button class="submit" type="submit">Add my name</button>
-      <p class="err" id="formerr">Please complete the required fields above.</p>
-      <p class="fineprint">Names, zip codes, and messages are published with your consent. Emails are never published or shared, and are used only to deliver this letter and send one follow-up.</p>
-    </form>
-
-    <div class="confirm" id="confirm" role="status">
-      <h3>Your name has been added.</h3>
-      <p>Thank you for standing with your neighbors. We are gathering 3,600 signatures — one hundred for every year of Louisa's life — and every one will be delivered to the Mayor's office. Help us get there:</p>
-      <div class="sharerow">
-        <button type="button" id="copylink">Copy link</button>
-        <a id="sh-bsky" target="_blank" rel="noopener">Bluesky</a>
-        <a id="sh-fb" target="_blank" rel="noopener">Facebook</a>
-        <a id="sh-x" target="_blank" rel="noopener">X</a>
-        <a id="sh-em">Email</a>
-      </div>
-    </div>
-  </div>
-</section>
 
 <section class="wall" id="wall" aria-label="Signatories">
   <div class="wall-inner">
@@ -953,7 +783,6 @@ footer a{color:rgba(255,255,255,.9);}
 
 <section class="memorial" aria-label="In memory">
   <div class="names" id="memorial-names">
-    <!-- Populated from memorial.json when supplied. Fallback line below. -->
     <span>In memory of Louisa Gag, and every neighbor we have lost to traffic violence.</span>
   </div>
 </section>
@@ -962,12 +791,9 @@ footer a{color:rgba(255,255,255,.9);}
 <footer>
   <p>A volunteer effort of Boston residents. Not affiliated with any organization.</p>
   <p>Press: <a href="#" id="pressmail">contact by email</a></p>
-  <p>Names, zip codes, and messages are published with signers' consent. Emails are never shared.</p>
+  <p>This frozen public record contains only signers&rsquo; names, ZIP codes, and messages.</p>
 </footer>
 
-<div class="stickycta" id="stickycta" aria-hidden="true" hidden>
-  <a href="#sign">Add my name <span>&rarr;</span></a>
-</div>
 
 <div class="notes-overlay" id="notes-overlay" hidden>
   <section class="notes-dialog" id="notes-dialog" role="dialog" aria-modal="true" aria-labelledby="notes-title" tabindex="-1">
@@ -996,457 +822,7 @@ footer a{color:rgba(255,255,255,.9);}
   </section>
 </div>
 
-<script src="config.js"></script>
-<script>
-(function(){
-  /* Public Supabase values live in config.js. The anon key is intended to be public. */
-  var CONFIG = window.OPEN_LETTER_CONFIG || {};
-  var SUPABASE_URL = CONFIG.SUPABASE_URL || "";
-  var SUPABASE_KEY = CONFIG.SUPABASE_ANON_KEY || "";
-
-  var GOAL = 3600;
-  var CLOSE_AT = 4000;
-  var OPEN_SHARE_TEXT = "Boston has been warned for years that delayed street-safety projects would cost lives. Enough is enough. Add your name before the letter is delivered to Mayor Wu on Thursday:";
-  var CLOSED_SHARE_TEXT = "4,000 people have demanded safer streets in Boston. Read the open letter being delivered to Mayor Wu:";
-  var petitionClosed = true;
-  var url = location.origin && location.origin !== "null" ? location.href.split("#")[0] : "https://benjaminsiegel.github.io/enough-is-enough/";
-
-  function sbHeaders(extra){
-    var h = { "apikey": SUPABASE_KEY, "Authorization": "Bearer " + SUPABASE_KEY };
-    for(var k in (extra||{})) h[k] = extra[k];
-    return h;
-  }
-
-  function updateShareLinks(closed){
-    var enc = encodeURIComponent;
-    var shareText = closed ? CLOSED_SHARE_TEXT : OPEN_SHARE_TEXT;
-    document.getElementById("sh-bsky").href = "https://bsky.app/intent/compose?text=" + enc(shareText + " " + url);
-    document.getElementById("sh-fb").href = "https://www.facebook.com/sharer/sharer.php?u=" + enc(url);
-    document.getElementById("sh-x").href = "https://twitter.com/intent/tweet?text=" + enc(shareText) + "&url=" + enc(url);
-    document.getElementById("sh-em").href = "mailto:?subject=" + enc(closed ? "Enough is Enough — read the open letter to Mayor Wu" : "Enough is Enough — sign the open letter to Mayor Wu") + "&body=" + enc(shareText + "\n\n" + url);
-    document.getElementById("pre-sh-text").href = "sms:?&body=" + enc(shareText + "\n\n" + url);
-    document.getElementById("pre-sh-wa").href = "https://wa.me/?text=" + enc(shareText + "\n\n" + url);
-    document.getElementById("pre-sh-em").href = "mailto:?subject=" + enc(closed ? "4,000 people demand safer Boston streets" : "Enough is Enough — sign before Thursday") + "&body=" + enc(shareText + "\n\n" + url);
-  }
-
-  function setPetitionState(n){
-    var closed = n >= CLOSE_AT;
-    petitionClosed = closed;
-    document.body.classList.toggle("petition-closed", closed);
-    document.getElementById("hero-sub").textContent = closed
-      ? "An open letter to Mayor Wu from 4000 parents, families, and neighbors."
-      : "An open letter to Mayor Wu from the parents, families, and neighbors of Boston.";
-    document.getElementById("hero-cta").textContent = closed ? "Read the letter" : "Read and sign the letter";
-    document.getElementById("sigcount").hidden = false;
-    if(closed){
-      document.getElementById("sigcount").textContent = "Letter closed July 16, 2026, at 8 a.m. with 4,000 neighbors’ signatures.";
-    }
-    document.getElementById("goalbar").hidden = closed;
-    document.getElementById("share-eyebrow").hidden = closed;
-    document.getElementById("share-title").textContent = closed
-      ? "4000 people have demanded safer streets in Boston."
-      : "Help bring in three more names.";
-    document.getElementById("share-copy-open").hidden = closed;
-    document.getElementById("share-copy-closed").hidden = !closed;
-    var signSection = document.getElementById("sign");
-    signSection.hidden = closed;
-    if(closed) signSection.setAttribute("aria-hidden", "true");
-    else signSection.removeAttribute("aria-hidden");
-    document.querySelectorAll("#sigform input, #sigform textarea, #sigform button").forEach(function(control){
-      control.disabled = closed;
-    });
-    var sticky = document.getElementById("stickycta");
-    sticky.hidden = closed;
-    updateShareLinks(closed);
-    if(typeof updBar === "function" && bar) updBar();
-  }
-
-  /* character counter (400) */
-  var msg = document.getElementById("message");
-  var cc = document.getElementById("charcount");
-  msg.addEventListener("input", function(){ cc.textContent = 400 - msg.value.length; });
-
-  /* press email — assembled at click time so it never appears in the page source */
-  var pm = document.getElementById("pressmail");
-  pm.addEventListener("click", function(e){
-    e.preventDefault();
-    var addr = ["benjamin","robert","siegel"].join(".") + "@" + "gmail" + ".com";
-    location.href = "mailto:" + addr + "?subject=" + encodeURIComponent("Enough is Enough — press inquiry");
-  });
-
-  /* signature wall + live count (Supabase). Falls back to count.json if Supabase isn't configured. */
-  function nextGoalPrompt(n){
-    var target, label;
-    if(n < GOAL * .5){ target = GOAL * .5; label = "halfway"; }
-    else if(n < GOAL * (2 / 3)){ target = GOAL * (2 / 3); label = "two thirds of the way there"; }
-    else if(n < GOAL * .75){ target = GOAL * .75; label = "three quarters of the way there"; }
-    else { target = GOAL; label = "our goal"; }
-    var needed = Math.max(0, Math.ceil(target - n));
-    if(!needed) return "Our goal has been reached.";
-    return needed.toLocaleString() + " more " + (needed === 1 ? "name" : "names") + " to reach " + label + ".";
-  }
-  function renderCount(n){
-    setPetitionState(n);
-    if(petitionClosed) return;
-    document.getElementById("sigcount").textContent =
-      n.toLocaleString() + " neighbors have signed.";
-    document.getElementById("goalfill").style.width = Math.min(100, (n / GOAL) * 100) + "%";
-  }
-  function lastNameKey(name){
-    var parts = name.trim().split(/\s+/);
-    return (parts[parts.length - 1] + " " + name).toLowerCase();
-  }
-  var notesTrigger = document.getElementById("notes-trigger");
-  var notesOverlay = document.getElementById("notes-overlay");
-  var notesDialog = document.getElementById("notes-dialog");
-  var notesClose = document.getElementById("notes-close");
-  var notesList = document.getElementById("notes-list");
-  var notesSummary = document.getElementById("notes-summary");
-  var notesSort = document.getElementById("notes-sort");
-  notesSort.value = "recent";
-  var notesRenderKey = "";
-  var notesPreviousFocus = null;
-  var notesRows = [];
-  var mapTrigger = document.getElementById("map-trigger");
-  var mapLinks = document.querySelectorAll("[data-map-trigger]");
-  var mapOverlay = document.getElementById("map-overlay");
-  var mapDialog = document.getElementById("map-dialog");
-  var mapClose = document.getElementById("map-close");
-  var mapFrame = document.querySelector(".map-frame");
-  var mapPreviousFocus = null;
-  var vigilTriggers = document.querySelectorAll(".vigil-trigger");
-  var vigilOverlay = document.getElementById("vigil-overlay");
-  var vigilDialog = document.getElementById("vigil-dialog");
-  var vigilClose = document.getElementById("vigil-close");
-  var vigilPreviousFocus = null;
-
-  function resetMapOverlay(){
-    mapOverlay.hidden = true;
-    document.body.classList.remove("map-open");
-  }
-  resetMapOverlay();
-  window.addEventListener("pageshow", resetMapOverlay);
-
-  function resetVigilOverlay(){
-    vigilOverlay.hidden = true;
-    document.body.classList.remove("vigil-open");
-  }
-  resetVigilOverlay();
-  window.addEventListener("pageshow", resetVigilOverlay);
-
-  function closeNotes(){
-    if(notesOverlay.hidden) return;
-    notesOverlay.hidden = true;
-    document.body.classList.remove("notes-open");
-    if(notesPreviousFocus) notesPreviousFocus.focus();
-  }
-  function openMap(trigger){
-    mapPreviousFocus = trigger || document.activeElement;
-    mapOverlay.hidden = false;
-    document.body.classList.add("map-open");
-    mapDialog.focus();
-    if(!mapFrame.getAttribute("src")){
-      mapFrame.setAttribute("src", mapFrame.getAttribute("data-src"));
-    }else{
-      focusMapOnLouisa();
-    }
-  }
-  function focusMapOnLouisa(){
-    window.requestAnimationFrame(function(){
-      try{
-        if(mapFrame.contentWindow && typeof mapFrame.contentWindow.focusLouisa === "function"){
-          mapFrame.contentWindow.focusLouisa();
-        }
-      }catch(e){}
-    });
-  }
-  function closeMap(){
-    if(mapOverlay.hidden) return;
-    mapOverlay.hidden = true;
-    document.body.classList.remove("map-open");
-    if(mapPreviousFocus) mapPreviousFocus.focus();
-  }
-  function openVigil(trigger){
-    vigilPreviousFocus = trigger || document.activeElement;
-    vigilOverlay.hidden = false;
-    document.body.classList.add("vigil-open");
-    vigilDialog.focus();
-  }
-  function closeVigil(){
-    if(vigilOverlay.hidden) return;
-    vigilOverlay.hidden = true;
-    document.body.classList.remove("vigil-open");
-    if(vigilPreviousFocus) vigilPreviousFocus.focus();
-  }
-  function renderNotes(rows){
-    var key = notesSort.value + "\u0003" + rows.map(function(row){ return row.name + "\u0001" + row.zip + "\u0001" + row.message + "\u0001" + row.created_at; }).join("\u0002");
-    if(key === notesRenderKey) return;
-    notesRenderKey = key;
-    notesList.innerHTML = "";
-    rows.forEach(function(row){
-      var note = document.createElement("article");
-      note.className = "mayor-note";
-      var quote = document.createElement("blockquote");
-      quote.textContent = row.message.trim();
-      var footer = document.createElement("footer");
-      footer.textContent = row.name;
-      var zip = document.createElement("span");
-      zip.className = "note-zip";
-      zip.textContent = row.zip;
-      footer.appendChild(zip);
-      note.appendChild(quote);
-      note.appendChild(footer);
-      notesList.appendChild(note);
-    });
-  }
-  function sortedNotes(rows){
-    var sorted = rows.slice();
-    if(notesSort.value === "recent"){
-      sorted.sort(function(a,b){ return String(b.created_at || "").localeCompare(String(a.created_at || "")); });
-    } else {
-      sorted.sort(function(a,b){ return lastNameKey(a.name).localeCompare(lastNameKey(b.name), undefined, {sensitivity:"base"}); });
-    }
-    return sorted;
-  }
-  function updateNotesSummary(count){
-    notesSummary.textContent = count.toLocaleString() + " " + (count === 1 ? "note" : "notes") +
-      " from signatories, " + (notesSort.value === "recent" ? "newest first." : "alphabetized by last name.");
-  }
-  notesTrigger.addEventListener("click", function(){
-    notesPreviousFocus = document.activeElement;
-    notesOverlay.hidden = false;
-    document.body.classList.add("notes-open");
-    notesDialog.focus();
-  });
-  notesClose.addEventListener("click", closeNotes);
-  notesOverlay.addEventListener("click", function(e){ if(e.target === notesOverlay) closeNotes(); });
-  mapTrigger.addEventListener("click", function(){ openMap(mapTrigger); });
-  mapLinks.forEach(function(link){ link.addEventListener("click", function(e){ e.preventDefault(); openMap(link); }); });
-  mapFrame.addEventListener("load", function(){ if(!mapOverlay.hidden) focusMapOnLouisa(); });
-  mapClose.addEventListener("click", closeMap);
-  mapOverlay.addEventListener("click", function(e){ if(e.target === mapOverlay) closeMap(); });
-  vigilTriggers.forEach(function(trigger){ trigger.addEventListener("click", function(){ openVigil(trigger); }); });
-  vigilClose.addEventListener("click", closeVigil);
-  vigilOverlay.addEventListener("click", function(e){ if(e.target === vigilOverlay) closeVigil(); });
-  document.addEventListener("keydown", function(e){ if(e.key === "Escape"){ closeNotes(); closeMap(); closeVigil(); } });
-  notesSort.addEventListener("change", function(){ updateNotesSummary(notesRows.length); renderNotes(sortedNotes(notesRows)); });
-  var BOSTON_ZIPS = {
-    "02108":true,"02109":true,"02110":true,"02111":true,"02112":true,"02113":true,"02114":true,"02115":true,"02116":true,"02117":true,
-    "02118":true,"02119":true,"02120":true,"02121":true,"02122":true,"02123":true,"02124":true,"02125":true,"02126":true,
-    "02127":true,"02128":true,"02129":true,"02130":true,"02131":true,"02132":true,"02133":true,"02134":true,
-    "02135":true,"02136":true,"02137":true,"02163":true,"02196":true,"02199":true,"02201":true,"02202":true,
-    "02203":true,"02204":true,"02205":true,"02206":true,"02207":true,"02208":true,"02209":true,"02210":true,
-    "02211":true,"02212":true,"02213":true,"02214":true,"02215":true,"02216":true,"02217":true
-  };
-  var SOMERVILLE_ZIPS = { "02143":true, "02144":true, "02145":true };
-  var CAMBRIDGE_ZIPS = { "02138":true, "02139":true, "02140":true, "02141":true, "02142":true };
-  var BROOKLINE_ZIPS = { "02445":true, "02446":true, "02447":true, "02467":true };
-  function isBostonZip(zip){
-    return !!BOSTON_ZIPS[String(zip || "").trim()];
-  }
-  function isMassachusettsZip(zip){
-    zip = String(zip || "").trim();
-    return /^(?:0(?:1\d|2[0-7])\d{2}|055\d{2})$/.test(zip);
-  }
-  function signerGroup(zip){
-    zip = String(zip || "").trim();
-    if(BOSTON_ZIPS[zip]) return "boston";
-    if(SOMERVILLE_ZIPS[zip]) return "somerville";
-    if(CAMBRIDGE_ZIPS[zip]) return "cambridge";
-    if(BROOKLINE_ZIPS[zip]) return "brookline";
-    return isMassachusettsZip(zip) ? "massachusetts" : "elsewhere";
-  }
-  function renderSignerList(box, rows, startIndex){
-    rows.forEach(function(row, index){
-      var div = document.createElement("div");
-      div.className = "signer";
-      div.textContent = row.name + " ";
-      var z = document.createElement("span");
-      z.className = "z";
-      z.textContent = row.zip;
-      div.appendChild(z);
-      if(row.message && row.message.trim()){
-        var tip = document.createElement("span");
-        var tipId = "comment-" + (startIndex + index);
-        tip.className = "comment-tooltip";
-        tip.id = tipId;
-        tip.setAttribute("role", "tooltip");
-        tip.textContent = row.message.trim();
-        div.classList.add("has-comment");
-        div.tabIndex = 0;
-        div.setAttribute("aria-describedby", tipId);
-        var marker = document.createElement("span");
-        marker.className = "comment-marker";
-        marker.setAttribute("aria-hidden", "true");
-        div.appendChild(marker);
-        div.appendChild(tip);
-      }
-      box.appendChild(div);
-    });
-  }
-  function fetchAllSignatures(start, rows, total){
-    return fetch(SUPABASE_URL + "/rest/v1/public_signatures?select=name,zip,message,created_at", {
-      headers: sbHeaders({
-        "Prefer": "count=exact",
-        "Range-Unit": "items",
-        "Range": start + "-" + (start + 999)
-      })
-    }).then(function(r){
-      var cr = r.headers.get("content-range");
-      var nextTotal = total;
-      if(cr && cr.indexOf("/") > -1) nextTotal = parseInt(cr.split("/")[1], 10);
-      return r.json().then(function(page){
-        var allRows = rows.concat(page);
-        if(page.length === 1000 && (nextTotal === null || allRows.length < nextTotal)){
-          return fetchAllSignatures(allRows.length, allRows, nextTotal);
-        }
-        return { rows: allRows, total: nextTotal };
-      });
-    });
-  }
-  function loadWall(){
-    if(!SUPABASE_URL || !SUPABASE_KEY) return;
-    fetchAllSignatures(0, [], null).then(function(d){
-      if(!d.rows || !d.rows.length) return;
-      var n = (d.total !== null && !isNaN(d.total)) ? d.total : d.rows.length;
-      renderCount(n);
-      var commentRows = d.rows.filter(function(row){ return row.message && row.message.trim(); });
-      notesRows = commentRows;
-      var commentCount = commentRows.length;
-      document.getElementById("wallhint").textContent =
-        "A yellow dot marks a signer who left a note — hover or focus their name to read one of " +
-        commentCount.toLocaleString() + " comments to the Mayor.";
-      notesTrigger.hidden = !commentCount;
-      notesTrigger.textContent = "Read " + commentCount.toLocaleString() + " " + (commentCount === 1 ? "note" : "notes") + " to the Mayor";
-      updateNotesSummary(commentCount);
-      renderNotes(sortedNotes(notesRows));
-      d.rows.sort(function(a,b){
-        return lastNameKey(a.name).localeCompare(lastNameKey(b.name), undefined, {sensitivity:"base"});
-      });
-      var groupedRows = { boston:[], somerville:[], cambridge:[], brookline:[], massachusetts:[], elsewhere:[] };
-      d.rows.forEach(function(row){ groupedRows[signerGroup(row.zip)].push(row); });
-      var groups = [
-        { key:"boston", groupId:null, labelId:"boston-label", boxId:"wallnames", label:"Boston signatories" },
-        { key:"somerville", groupId:"somerville-group", labelId:"somerville-label", boxId:"somerville-wallnames", label:"Somerville signatories" },
-        { key:"cambridge", groupId:"cambridge-group", labelId:"cambridge-label", boxId:"cambridge-wallnames", label:"Cambridge signatories" },
-        { key:"brookline", groupId:"brookline-group", labelId:"brookline-label", boxId:"brookline-wallnames", label:"Brookline signatories" },
-        { key:"massachusetts", groupId:"massachusetts-group", labelId:"massachusetts-label", boxId:"massachusetts-wallnames", label:"Elsewhere in Massachusetts" },
-        { key:"elsewhere", groupId:"elsewhere-group", labelId:"elsewhere-label", boxId:"elsewhere-wallnames", label:"Elsewhere" }
-      ];
-      var position = 0;
-      groups.forEach(function(group){
-        var rows = groupedRows[group.key];
-        var box = document.getElementById(group.boxId);
-        box.innerHTML = "";
-        document.getElementById(group.labelId).textContent = group.label + " (" + rows.length.toLocaleString() + ")";
-        if(group.groupId) document.getElementById(group.groupId).hidden = !rows.length;
-        if(rows.length){
-          renderSignerList(box, rows, position);
-          position += rows.length;
-        }
-      });
-      document.getElementById("wallcount").textContent = petitionClosed
-        ? n.toLocaleString() + " signatories — in alphabetical order."
-        : n.toLocaleString() + " of 3,600 — in alphabetical order.";
-      document.getElementById("wall").style.display = "block";
-    }).catch(function(){});
-  }
-  loadWall();
-  /* Polling keeps open pages current when other neighbors add their names. */
-  setInterval(loadWall, 30000);
-  document.addEventListener("visibilitychange", function(){ if(!document.hidden) loadWall(); });
-
-  /* memorial strip — supply memorial.json as [{"name":"…","year":"…"}] */
-  fetch("/memorial.json").then(function(r){ return r.ok ? r.json() : null; }).then(function(list){
-    if(list && list.length){
-      var box = document.getElementById("memorial-names");
-      box.innerHTML = "";
-      list.forEach(function(p){
-        var s = document.createElement("span");
-        s.textContent = p.year ? (p.name + ", " + p.year) : p.name;
-        box.appendChild(s);
-      });
-    }
-  }).catch(function(){});
-
-  /* sticky CTA: visible when neither the hero nor the sign form is on screen; gone after signing */
-  var bar = document.getElementById("stickycta");
-  var heroVis = true, signVis = false, signed = false;
-  function updBar(){ bar.classList.toggle("show", !petitionClosed && !heroVis && !signVis && !signed); }
-  if("IntersectionObserver" in window){
-    new IntersectionObserver(function(en){ heroVis = en[0].isIntersecting; updBar(); }, {threshold:.05}).observe(document.querySelector(".hero"));
-    new IntersectionObserver(function(en){ signVis = en[0].isIntersecting; updBar(); }, {threshold:.1}).observe(document.getElementById("sign"));
-  }
-
-  /* form submit: Supabase if configured, otherwise Netlify Forms */
-  var form = document.getElementById("sigform");
-  var err = document.getElementById("formerr");
-  var submit = form.querySelector("button[type=submit]");
-  function showError(message){
-    err.textContent = message;
-    err.style.display = "block";
-    submit.disabled = false;
-    submit.textContent = "Add my name";
-  }
-  function showConfirm(){
-    signed = true; updBar();
-    form.style.display = "none";
-    document.getElementById("confirm").style.display = "block";
-    document.getElementById("confirm").scrollIntoView({behavior:"smooth", block:"center"});
-    loadWall();
-  }
-  form.addEventListener("submit", function(e){
-    e.preventDefault();
-    if(petitionClosed){ showError("This petition has closed at 4,000 signatures."); return; }
-    if(!form.checkValidity()){ err.style.display = "block"; form.reportValidity(); return; }
-    err.style.display = "none";
-    if(document.getElementById("botfield").value){ showConfirm(); return; } /* honeypot: pretend success */
-
-    if(!(SUPABASE_URL && SUPABASE_KEY)){
-      showError("Signing is being set up. Please check back shortly.");
-      return;
-    }
-
-    submit.disabled = true;
-    submit.textContent = "Adding your name…";
-    var roles = Array.prototype.map.call(document.querySelectorAll("input[name=role]:checked"), function(c){ return c.value; }).join(", ");
-    fetch(SUPABASE_URL + "/rest/v1/signatures", {
-        method: "POST",
-        headers: sbHeaders({ "Content-Type": "application/json", "Prefer": "return=minimal" }),
-        body: JSON.stringify({
-          name: document.getElementById("fullname").value.trim(),
-          zip: document.getElementById("zip").value.trim(),
-          email: document.getElementById("email").value.trim().toLowerCase(),
-          roles: roles,
-          message: msg.value.trim(),
-          consent_public: true,
-          consent_contact: document.getElementById("consent-contact").checked
-        })
-      }).then(function(response){
-        if(response.ok || response.status === 409) return showConfirm();
-        return response.json().catch(function(){ return {}; }).then(function(body){
-          if(/petition is closed/i.test(body.message || "")){
-            setPetitionState(CLOSE_AT);
-            document.getElementById("letter").scrollIntoView({behavior:"smooth", block:"start"});
-            return;
-          }
-          throw new Error("The signing service could not save your name.");
-        });
-      }).catch(function(){
-        showError("We couldn't add your name just now. Please try again in a moment.");
-      });
-  });
-
-  /* share links */
-  updateShareLinks(petitionClosed);
-  function copyLink(button){
-    navigator.clipboard.writeText(url).then(function(){
-      button.textContent = "Link copied";
-    });
-  }
-  document.getElementById("copylink").addEventListener("click", function(){ copyLink(this); });
-  document.getElementById("pre-copylink").addEventListener("click", function(){ copyLink(this); });
-})();
-</script>
+<script src="signatures.js"></script>
+<script src="app.js"></script>
 </body>
 </html>
