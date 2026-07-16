@@ -796,14 +796,14 @@ footer a{color:rgba(255,255,255,.9);}
   </video>
   <h1>Enough<br>is Enough</h1>
   <div class="rule" aria-hidden="true"></div>
-  <p class="sub">An open letter to Mayor Wu from the parents, families, and neighbors of Boston.</p>
+  <p class="sub" id="hero-sub">An open letter to Mayor Wu from the parents, families, and neighbors of Boston.</p>
   <div class="hero-actions">
-    <a class="cta" href="#letter">Read and sign the letter</a>
+    <a class="cta" id="hero-cta" href="#letter">Read and sign the letter</a>
     <button class="notes-trigger" id="notes-trigger" type="button" hidden>Read notes to the Mayor</button>
     <button class="notes-trigger map-trigger" id="map-trigger" type="button">See the map of 49 people killed by drivers since 2021</button>
   </div>
   <p class="count" id="sigcount">Neighbors have signed.</p>
-  <div class="goalbar" aria-hidden="true"><div class="goalfill" id="goalfill"></div></div>
+  <div class="goalbar" id="goalbar" aria-hidden="true"><div class="goalfill" id="goalfill"></div></div>
   <p class="hero-press"><span class="press-label">In the news</span><a href="https://www.bostonglobe.com/2026/07/15/opinion/bicyclist-deaths-boston-bike-lanes/" target="_blank" rel="noopener">Boston Globe: “The preventable blind spot trap killing Boston’s cyclists” <span aria-hidden="true">↗</span></a> &nbsp;·&nbsp; <a href="https://www.bostonglobe.com/2026/07/15/metro/louisa-gag-cyclist-truck-death/" target="_blank" rel="noopener">Boston Globe: Wu and City Hall remain reticent on key crash details <span aria-hidden="true">↗</span></a> &nbsp;·&nbsp; <a href="https://www.bostonherald.com/2026/07/15/boston-mayor-michelle-wu-slammed-for-stalled-streets-projects-after-city-transportation-planners-death/" target="_blank" rel="noopener">Boston Herald: Wu slammed for stalled street projects <span aria-hidden="true">↗</span></a> &nbsp;·&nbsp; <a href="https://www.bostonherald.com/2026/07/14/editorial-the-time-for-safe-streets-in-boston-is-now/" target="_blank" rel="noopener">Boston Herald editorial: “The time for safe streets in Boston is now.” <span aria-hidden="true">↗</span></a> &nbsp;·&nbsp; <a href="https://www.bostonglobe.com/2026/07/14/opinion/letters-city-bike-advocate-killed-safety-policy/" target="_blank" rel="noopener">Boston Globe letters on street safety <span aria-hidden="true">↗</span></a> &nbsp;·&nbsp; <a href="https://mass.streetsblog.org/2026/07/14/wu-administration-shelved-safety-plans-for-mission-hill-streets-where-driver-killed-louisa-gag" target="_blank" rel="noopener">Streetsblog: Wu administration shelved Mission Hill safety plans <span aria-hidden="true">↗</span></a></p>
 </header>
 
@@ -837,9 +837,10 @@ footer a{color:rgba(255,255,255,.9);}
 
 <section class="share-prompt" aria-label="Share the open letter">
   <div class="share-prompt-inner">
-    <p class="eyebrow">Before Thursday</p>
-    <h2>Help bring in three more names.</h2>
-    <p>We will deliver this letter to the Mayor&rsquo;s office in advance of <button class="vigil-link vigil-trigger" type="button" aria-haspopup="dialog" aria-controls="vigil-overlay">Thursday&rsquo;s vigil in honor of Louisa</button> &mdash; City Hall Plaza; gather at 5:30 p.m., program at 6 p.m.</p>
+    <p class="eyebrow" id="share-eyebrow">Before Thursday</p>
+    <h2 id="share-title">Help bring in three more names.</h2>
+    <p id="share-copy-open">We will deliver this letter to the Mayor&rsquo;s office in advance of <button class="vigil-link vigil-trigger" type="button" aria-haspopup="dialog" aria-controls="vigil-overlay">Thursday&rsquo;s vigil in honor of Louisa</button> &mdash; City Hall Plaza; gather at 5:30 p.m., program at 6 p.m.</p>
+    <p id="share-copy-closed" hidden>Having surpassed our goal of 3600 signatures, 100 for every year of Louisa&rsquo;s life, we are delivering this letter to the Mayor&rsquo;s office in advance of <button class="vigil-link vigil-trigger" type="button" aria-haspopup="dialog" aria-controls="vigil-overlay">Thursday&rsquo;s vigil in honor of Louisa</button> &mdash; City Hall Plaza; gather at 5:30 p.m., program at 6 p.m.</p>
     <div class="sharerow">
       <a id="pre-sh-text">Text</a>
       <a id="pre-sh-wa" target="_blank" rel="noopener">WhatsApp</a>
@@ -1004,13 +1005,57 @@ footer a{color:rgba(255,255,255,.9);}
   var SUPABASE_KEY = CONFIG.SUPABASE_ANON_KEY || "";
 
   var GOAL = 3600;
-  var SHARE_TEXT = "Boston has been warned for years that delayed street-safety projects would cost lives. Enough is enough. Add your name before the letter is delivered to Mayor Wu on Thursday:";
+  var CLOSE_AT = 4000;
+  var OPEN_SHARE_TEXT = "Boston has been warned for years that delayed street-safety projects would cost lives. Enough is enough. Add your name before the letter is delivered to Mayor Wu on Thursday:";
+  var CLOSED_SHARE_TEXT = "4,000 people have demanded safer streets in Boston. Read the open letter being delivered to Mayor Wu:";
+  var petitionClosed = false;
   var url = location.origin && location.origin !== "null" ? location.href.split("#")[0] : "https://benjaminsiegel.github.io/enough-is-enough/";
 
   function sbHeaders(extra){
     var h = { "apikey": SUPABASE_KEY, "Authorization": "Bearer " + SUPABASE_KEY };
     for(var k in (extra||{})) h[k] = extra[k];
     return h;
+  }
+
+  function updateShareLinks(closed){
+    var enc = encodeURIComponent;
+    var shareText = closed ? CLOSED_SHARE_TEXT : OPEN_SHARE_TEXT;
+    document.getElementById("sh-bsky").href = "https://bsky.app/intent/compose?text=" + enc(shareText + " " + url);
+    document.getElementById("sh-fb").href = "https://www.facebook.com/sharer/sharer.php?u=" + enc(url);
+    document.getElementById("sh-x").href = "https://twitter.com/intent/tweet?text=" + enc(shareText) + "&url=" + enc(url);
+    document.getElementById("sh-em").href = "mailto:?subject=" + enc(closed ? "Enough is Enough — read the open letter to Mayor Wu" : "Enough is Enough — sign the open letter to Mayor Wu") + "&body=" + enc(shareText + "\n\n" + url);
+    document.getElementById("pre-sh-text").href = "sms:?&body=" + enc(shareText + "\n\n" + url);
+    document.getElementById("pre-sh-wa").href = "https://wa.me/?text=" + enc(shareText + "\n\n" + url);
+    document.getElementById("pre-sh-em").href = "mailto:?subject=" + enc(closed ? "4,000 people demand safer Boston streets" : "Enough is Enough — sign before Thursday") + "&body=" + enc(shareText + "\n\n" + url);
+  }
+
+  function setPetitionState(n){
+    var closed = n >= CLOSE_AT;
+    petitionClosed = closed;
+    document.body.classList.toggle("petition-closed", closed);
+    document.getElementById("hero-sub").textContent = closed
+      ? "An open letter to Mayor Wu from 4000 parents, families, and neighbors."
+      : "An open letter to Mayor Wu from the parents, families, and neighbors of Boston.";
+    document.getElementById("hero-cta").textContent = closed ? "Read the letter" : "Read and sign the letter";
+    document.getElementById("sigcount").hidden = closed;
+    document.getElementById("goalbar").hidden = closed;
+    document.getElementById("share-eyebrow").hidden = closed;
+    document.getElementById("share-title").textContent = closed
+      ? "4000 people have demanded safer streets in Boston."
+      : "Help bring in three more names.";
+    document.getElementById("share-copy-open").hidden = closed;
+    document.getElementById("share-copy-closed").hidden = !closed;
+    var signSection = document.getElementById("sign");
+    signSection.hidden = closed;
+    if(closed) signSection.setAttribute("aria-hidden", "true");
+    else signSection.removeAttribute("aria-hidden");
+    document.querySelectorAll("#sigform input, #sigform textarea, #sigform button").forEach(function(control){
+      control.disabled = closed;
+    });
+    var sticky = document.getElementById("stickycta");
+    sticky.hidden = closed;
+    updateShareLinks(closed);
+    if(typeof updBar === "function" && bar) updBar();
   }
 
   /* character counter (400) */
@@ -1038,6 +1083,8 @@ footer a{color:rgba(255,255,255,.9);}
     return needed.toLocaleString() + " more " + (needed === 1 ? "name" : "names") + " to reach " + label + ".";
   }
   function renderCount(n){
+    setPetitionState(n);
+    if(petitionClosed) return;
     document.getElementById("sigcount").textContent =
       n.toLocaleString() + " neighbors have signed.";
     document.getElementById("goalfill").style.width = Math.min(100, (n / GOAL) * 100) + "%";
@@ -1295,8 +1342,9 @@ footer a{color:rgba(255,255,255,.9);}
           position += rows.length;
         }
       });
-      document.getElementById("wallcount").textContent =
-        n.toLocaleString() + " of 3,600 — in alphabetical order.";
+      document.getElementById("wallcount").textContent = petitionClosed
+        ? n.toLocaleString() + " signatories — in alphabetical order."
+        : n.toLocaleString() + " of 3,600 — in alphabetical order.";
       document.getElementById("wall").style.display = "block";
     }).catch(function(){});
   }
@@ -1321,7 +1369,7 @@ footer a{color:rgba(255,255,255,.9);}
   /* sticky CTA: visible when neither the hero nor the sign form is on screen; gone after signing */
   var bar = document.getElementById("stickycta");
   var heroVis = true, signVis = false, signed = false;
-  function updBar(){ bar.classList.toggle("show", !heroVis && !signVis && !signed); }
+  function updBar(){ bar.classList.toggle("show", !petitionClosed && !heroVis && !signVis && !signed); }
   if("IntersectionObserver" in window){
     new IntersectionObserver(function(en){ heroVis = en[0].isIntersecting; updBar(); }, {threshold:.05}).observe(document.querySelector(".hero"));
     new IntersectionObserver(function(en){ signVis = en[0].isIntersecting; updBar(); }, {threshold:.1}).observe(document.getElementById("sign"));
@@ -1346,6 +1394,7 @@ footer a{color:rgba(255,255,255,.9);}
   }
   form.addEventListener("submit", function(e){
     e.preventDefault();
+    if(petitionClosed){ showError("This petition has closed at 4,000 signatures."); return; }
     if(!form.checkValidity()){ err.style.display = "block"; form.reportValidity(); return; }
     err.style.display = "none";
     if(document.getElementById("botfield").value){ showConfirm(); return; } /* honeypot: pretend success */
@@ -1372,21 +1421,21 @@ footer a{color:rgba(255,255,255,.9);}
         })
       }).then(function(response){
         if(response.ok || response.status === 409) return showConfirm();
-        throw new Error("The signing service could not save your name.");
+        return response.json().catch(function(){ return {}; }).then(function(body){
+          if(/petition is closed/i.test(body.message || "")){
+            setPetitionState(CLOSE_AT);
+            document.getElementById("letter").scrollIntoView({behavior:"smooth", block:"start"});
+            return;
+          }
+          throw new Error("The signing service could not save your name.");
+        });
       }).catch(function(){
         showError("We couldn't add your name just now. Please try again in a moment.");
       });
   });
 
   /* share links */
-  var enc = encodeURIComponent;
-  document.getElementById("sh-bsky").href = "https://bsky.app/intent/compose?text=" + enc(SHARE_TEXT + " " + url);
-  document.getElementById("sh-fb").href = "https://www.facebook.com/sharer/sharer.php?u=" + enc(url);
-  document.getElementById("sh-x").href = "https://twitter.com/intent/tweet?text=" + enc(SHARE_TEXT) + "&url=" + enc(url);
-  document.getElementById("sh-em").href = "mailto:?subject=" + enc("Enough is Enough — sign the open letter to Mayor Wu") + "&body=" + enc(SHARE_TEXT + "\n\n" + url);
-  document.getElementById("pre-sh-text").href = "sms:?&body=" + enc(SHARE_TEXT + "\n\n" + url);
-  document.getElementById("pre-sh-wa").href = "https://wa.me/?text=" + enc(SHARE_TEXT + "\n\n" + url);
-  document.getElementById("pre-sh-em").href = "mailto:?subject=" + enc("Enough is Enough — sign before Thursday") + "&body=" + enc(SHARE_TEXT + "\n\n" + url);
+  updateShareLinks(false);
   function copyLink(button){
     navigator.clipboard.writeText(url).then(function(){
       button.textContent = "Link copied";

@@ -43,3 +43,29 @@ create view public.public_signatures
   where approved = true and consent_public = true;
 
 grant select on public.public_signatures to anon;
+
+-- Close the petition exactly when the 4,000th signature is inserted.
+-- The advisory lock prevents simultaneous requests from creating a 4,001st row.
+create or replace function public.enforce_signature_cap()
+returns trigger
+language plpgsql
+security definer
+set search_path = pg_catalog, public
+as $function$
+begin
+  perform pg_advisory_xact_lock(4000);
+  if (select count(*) from public.signatures) >= 4000 then
+    raise exception using
+      errcode = 'P0001',
+      message = 'Petition is closed at 4,000 signatures.';
+  end if;
+  return new;
+end;
+$function$;
+
+revoke all on function public.enforce_signature_cap() from public;
+
+drop trigger if exists signatures_cap_4000 on public.signatures;
+create trigger signatures_cap_4000
+before insert on public.signatures
+for each row execute function public.enforce_signature_cap();
