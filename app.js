@@ -7,6 +7,34 @@
     ? location.href.split("#")[0]
     : "https://benjaminsiegel.github.io/enough-is-enough/";
 
+  function updateDeadlineCountdown(){
+    var countdown = document.getElementById("deadline-countdown");
+    if(!countdown) return;
+    var parts = new Intl.DateTimeFormat("en-US", {
+      timeZone:"America/New_York",
+      year:"numeric",
+      month:"numeric",
+      day:"numeric"
+    }).formatToParts(new Date());
+    var date = {};
+    parts.forEach(function(part){ if(part.type !== "literal") date[part.type] = Number(part.value); });
+    var today = Date.UTC(date.year, date.month - 1, date.day);
+    var deadline = Date.UTC(2026, 6, 31);
+    var daysRemaining = Math.round((deadline - today) / 86400000);
+    if(daysRemaining > 1){
+      countdown.textContent = daysRemaining + " days remaining";
+    }else if(daysRemaining === 1){
+      countdown.textContent = "1 day remaining";
+    }else if(daysRemaining === 0){
+      countdown.textContent = "Response due today";
+    }else{
+      countdown.textContent = "Response deadline passed July 31";
+    }
+  }
+
+  updateDeadlineCountdown();
+  window.setInterval(updateDeadlineCountdown, 60 * 60 * 1000);
+
   function updateShareLinks(){
     var enc = encodeURIComponent;
     document.getElementById("pre-sh-text").href = "sms:?&body=" + enc(SHARE_TEXT + "\n\n" + url);

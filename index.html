@@ -55,12 +55,19 @@ a{color:inherit;}
 .topband{
   background:var(--asphalt);
   color:rgba(255,255,255,.85);
+  display:flex;
+  justify-content:center;
+  align-items:center;
+  flex-wrap:wrap;
+  gap:.35rem .65rem;
   font-size:.78rem;
   letter-spacing:.14em;
   text-transform:uppercase;
   text-align:center;
   padding:.7rem 1rem;
 }
+.deadline-separator{color:rgba(255,255,255,.42);}
+.deadline-countdown{color:var(--paint);font-weight:700;}
 
 /* ---------- hero ---------- */
 .hero{
@@ -140,7 +147,8 @@ a{color:inherit;}
   align-items:center;
   flex-wrap:wrap;
   gap:.7rem;
-  margin-top:2.2rem;
+  width:min(100%,52rem);
+  margin:2.2rem auto 0;
 }
 .hero-actions .cta{margin-top:0;}
 .notes-trigger{
@@ -179,7 +187,7 @@ a{color:inherit;}
   transition:width .8s ease;
 }
 .hero-press{
-  max-width:62ch;
+  width:min(100%,52rem);
   margin:1rem auto 0;
   color:var(--ink);
   font-size:.78rem;
@@ -427,6 +435,9 @@ body.vigil-open{overflow:hidden;}
 }
 .vigil-close:focus-visible{outline:3px solid var(--paint);outline-offset:3px;}
 @media (max-width:560px){
+  .topband{gap:.2rem;font-size:.72rem;line-height:1.35;letter-spacing:.07em;}
+  .topband > span:first-child,.deadline-countdown{flex-basis:100%;}
+  .deadline-separator{display:none;}
   .hero-actions{flex-direction:column;align-items:stretch;max-width:21rem;margin-left:auto;margin-right:auto;}
   .hero-actions .cta,.notes-trigger,.map-trigger{text-align:center;}
   .notes-overlay{padding:0;}
@@ -693,7 +704,11 @@ footer a{color:rgba(255,255,255,.9);}
 </head>
 <body class="petition-closed">
 
-<div class="topband"><button class="vigil-link vigil-trigger" type="button" aria-haspopup="dialog" aria-controls="vigil-overlay">Thursday, July 16 &nbsp;·&nbsp; Vigil for Louisa Gag &nbsp;·&nbsp; City Hall Plaza &nbsp;·&nbsp; Gather 5:30 p.m., program 6 p.m.</button></div>
+<div class="topband" role="status" aria-live="polite">
+  <span>Mayor Wu response requested by <time datetime="2026-07-31">July 31</time></span>
+  <span class="deadline-separator" aria-hidden="true">·</span>
+  <strong class="deadline-countdown" id="deadline-countdown">Deadline approaching</strong>
+</div>
 
 <header class="hero">
   <video class="hero-video" autoplay muted loop playsinline preload="metadata" aria-hidden="true">
@@ -769,7 +784,7 @@ footer a{color:rgba(255,255,255,.9);}
 <section class="share-prompt" aria-label="Share the open letter">
   <div class="share-prompt-inner">
     <h2 id="share-title">4000 people have demanded safer streets in Boston.</h2>
-    <p id="share-copy-closed">Having surpassed our goal of 3600 signatures, 100 for every year of Louisa&rsquo;s life, we delivered this letter to the Mayor&rsquo;s office before the <button class="vigil-link vigil-trigger" type="button" aria-haspopup="dialog" aria-controls="vigil-overlay">vigil in honor of Louisa on Thursday, July 16</button>, and have asked Mayor Wu for a response before July 31.</p>
+    <p id="share-copy-closed">We delivered this letter to the Mayor&rsquo;s office before the <button class="vigil-link vigil-trigger" type="button" aria-haspopup="dialog" aria-controls="vigil-overlay">July 16 vigil in honor of Louisa</button> and asked Mayor Wu to respond by July 31.</p>
     <div class="sharerow">
       <a id="pre-sh-text">Text</a>
       <a id="pre-sh-wa" target="_blank" rel="noopener">WhatsApp</a>
